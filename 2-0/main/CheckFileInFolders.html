@@ -1,0 +1,181 @@
+<html>
+	<link rel="stylesheet" type="text/css" href="\\tsms\2-0\lib\actevent.css"/></link>
+	<script src="\\tsms\2-0\lib\cryptojs\rollups\md5.js"></script>
+	<script src="\\tsms\2-0\lib\cryptojs\components\enc-base64-min.js"></script>
+	<script src="\\tsms\2-0\lib\varglobal.js"></script>
+	<script src='\\tsms\2-0\lib\pathglobal.js'></script>
+	<script src='\\tsms\2-0\lib\actstructure.js'></script>
+	<script src='\\tsms\2-0\lib\actarray.js'></script>
+	<script src='\\tsms\2-0\lib\actfile.js'></script>
+	<script src="\\tsms\2-0\lib\actobject.js"></script>
+	<script src='\\tsms\2-0\lib\actwind.js'></script>
+	<script src='\\tsms\2-0\lib\actevent.js'></script>
+	<script src='\\tsms\2-0\lib\actxsl.js'></script>
+<head>
+	<script type='text/javascript'>
+		GetEventTime(600000);
+	</script>
+</head>
+
+<body>
+<script type='text/javascript'>
+	this.document.write("<title>");
+	this.document.write("Одинаковые по размеру файлы в дочерних папках");
+	this.document.write("</title>");
+
+	var FileIn = document.location.href;
+	var FolderIn = GetPathFile(fso.GetParentFolderName(FileIn));
+	
+	function GetSubFolders(FolderIn){
+		var SubFolders = new Enumerator(fso.GetFolder(FolderIn).SubFolders);
+		var SubFoldersOut = new Object();
+		for (; !SubFolders.atEnd(); SubFolders.moveNext())
+		{
+			FilesFolder = GetFilesFolder(SubFolders.item());
+
+			for (var i in FilesFolder)
+			{
+				var FileExt = FilesFolder[i].info.Extension;
+				var FileSize = FilesFolder[i].info.Size;
+				FileSize = FilesFolder[i].info["Hash"+FileExt.toUpperCase()];
+				var Parent = FilesFolder[i].info.ParentName.replace(/,/g,", ");
+				
+				if (SubFoldersOut.hasOwnProperty(i)) {
+
+					var FilesSize = SubFoldersOut[i].Size;
+					FilesSize = SubFoldersOut[i]["Hash"+FileExt.toUpperCase()];
+					if (FileSize == FilesSize || SubFoldersOut[i].FoldersParent.hasOwnProperty(FileSize)) {
+						SubFoldersOut[i].FoldersParent[FilesSize] = SubFoldersOut[i].FoldersParent[FilesSize]+", "+Parent;
+					} else {
+						SubFoldersOut[i].FoldersParent[FileSize] = Parent;
+						SubFoldersOut[i].FoldersParent.length = Number(SubFoldersOut[i].FoldersParent.length)+1;
+					}
+				} else {
+					SubFoldersOut[i] = FilesFolder[i].info;
+					var FoldersParent = new Object();
+					FoldersParent[FileSize] = Parent;
+					SubFoldersOut[i]["FoldersParent"] = FoldersParent;
+					SubFoldersOut[i].FoldersParent["length"] = 1;
+				}
+				
+			}
+		}
+		return SubFoldersOut;
+	}
+	
+	function GetSortObj(ObjIn){
+	var ObjOut = new Object();
+		for (var i in ObjIn)
+		{
+			var FileSize = ObjIn[i].Size;
+			var PartName = ObjIn[i].Name.substring(0, ObjIn[i].Name.indexOf("-"));
+			var Profile = ObjIn[i].Name.substring(PartName.length+1);
+			Profile = Profile.substring(0, Profile.indexOf("-"));
+			ObjIn[i]["Profile"] = Profile;
+			
+			var CommaCalc = ""
+			
+			for (var j in ObjIn[i].FoldersParent)
+			{
+				var Parents = ""+ObjIn[i].FoldersParent[j]+"";
+				var CommaCalc = Parents.split(",").length - 1;
+				
+				var FilesSize = j;
+				if (FilesSize == FileSize && !ObjIn[i].FoldersParent.hasOwnProperty(FileSize)) {
+				//if (FilesSize-25 < FileSize && FileSize < FilesSize+25 && !ObjIn[i].FoldersParent.hasOwnProperty(FileSize)) {
+					ObjIn[i].FoldersParent[FileSize] = ObjIn[i].FoldersParent[FileSize]+", "+ObjIn[i].FoldersParent[j];
+					if (ObjIn[i].FoldersParent.length > 1) ObjIn[i].FoldersParent.length = ObjIn[i].FoldersParent.length-1;
+					delete ObjIn[i].FoldersParent[j];
+				}
+			}
+			
+			for (var j in ObjIn[i].FoldersParent)
+			{
+				var FilesSize = j;
+				//if (FilesSize == FileSize && !ObjIn[i].FoldersParent.hasOwnProperty(FileSize)) {
+				if (FilesSize-25 < FileSize && FileSize < FilesSize+25 && !ObjIn[i].FoldersParent.hasOwnProperty(FileSize)) {
+					ObjIn[i].FoldersParent[FileSize] = ObjIn[i].FoldersParent[FileSize]+", "+ObjIn[i].FoldersParent[j];
+					if (ObjIn[i].FoldersParent.length > 1) ObjIn[i].FoldersParent.length = ObjIn[i].FoldersParent.length-1;
+					delete ObjIn[i].FoldersParent[j];
+				}
+			}
+			
+			if (ObjOut.hasOwnProperty(PartName)){
+				if (ObjOut[PartName].Profile == Profile){
+					ObjOut[PartName] = ObjIn[i];
+				} else {
+					ObjOut[PartName+ModID+Profile] = ObjIn[i];
+				}
+			} else {
+				ObjOut[PartName] = ObjIn[i];
+			}
+		}
+		return ObjOut;
+	}
+	
+	GetDataTable(GetSortObj(GetSubFolders(FolderIn)));
+	//GetDataTable(GetSubFolders(FolderIn));
+	
+	function GetDataTable(ObjIn)
+	{
+		//console.log(ObjIn);
+		this.document.write("<font face='Times' size='3'><b>Таблица 1. Одинаковые по размеру файлы (байт) в дочерних папках</b></font>");
+		this.document.write("</br>");
+		this.document.write("</br>");
+		this.document.write("<table cellspacing='1' bgcolor='#99ccff' width='800' STYLE='border-collapse: collapse; border: 1px solid black;' border='2'>");
+		this.document.write("<thead>");
+		this.document.write("<td width='100' align='center'><b>Позиция</b></td>");
+		this.document.write("<td width='120' align='center'><b>Тип</b></td>");
+		this.document.write("<td align='center'><b>Имя папки</b></td>");
+		this.document.write("<td width='70' align='center'><b>Размер</b></td>");
+		this.document.write("</thead>");
+		
+		for (var i in ObjIn)
+		{
+			if (ObjIn[i].FoldersParent.length == 1) {
+				this.document.write("<tr bgcolor='white'>");
+				this.document.write("<td rowspan='"+(ObjIn[i].FoldersParent.length + 1)+"' align='center'><font color='white'>№</font><b>"+i+"</b></td>");
+			} else {
+				this.document.write("<tr bgcolor='fdbcb4'>");
+				this.document.write("<td rowspan='"+(ObjIn[i].FoldersParent.length + 1)+"' align='center'><font color='fdbcb4'>№</font><b>"+i+"</b></td>");
+			}
+			
+			
+			if ("Profile" in ObjIn[i]) {
+				this.document.write("<td rowspan='"+(ObjIn[i].FoldersParent.length + 1)+"' align='center'>"+ObjIn[i].Profile+"</td>");
+			} else {
+				this.document.write("<td rowspan='"+(ObjIn[i].FoldersParent.length + 1)+"' align='center'></td>");
+			}
+			
+			this.document.write("</tr>");
+			for (var j in ObjIn[i].FoldersParent)
+			{
+				if (j != "length") {
+					if (ObjIn[i].FoldersParent.length == 1) {
+						this.document.write("<tr bgcolor='white'>");
+					} else {
+						this.document.write("<tr bgcolor='fdbcb4'>");
+					}
+					
+					this.document.write("<td align='center'><b>"+ObjIn[i].FoldersParent[j]+"</b></td>");
+					
+					//this.document.write("<td align='center'><b>");
+					//var Parents = ""+ObjIn[i].FoldersParent[j]+"";
+					//if (Parents.indexOf(",") >= 0){
+						//for (var c = 0; c < Parents.split(",").length - 1; c=c+10){
+					//		this.document.write(Parents.replace(/,/g,", "));
+						//}
+					//} else {
+					//	this.document.write(Parents);
+					//}
+					//this.document.write("</b></td>");
+					
+					this.document.write("<td align='center'>[<i>"+j.toString(CryptoJS.enc.Base64)+"</i>]</td>");
+					this.document.write("</tr>");
+				}
+			}
+		}
+		this.document.write("</table>");
+	}
+</script>
+</body>

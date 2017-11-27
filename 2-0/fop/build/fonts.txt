@@ -1,0 +1,5 @@
+c:
+
+cd c:\fop\fop
+
+java -cp build/fop.jar;lib/avalon-framework-cvs-20020806.jar;lib/xml-apis.jar;lib/xercesImpl-2.2.1.jar;lib/xalan-2.4.1.jar org.apache.fop.fonts.apps.TTFReader conf/fonts/gostsec.ttf conf/fonts/gostsec.xml

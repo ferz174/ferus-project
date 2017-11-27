@@ -1,0 +1,164 @@
+<!doctype html>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html" charset="utf-8"> 
+	<meta http-equiv="Refresh" content="900" />
+	<script src="\\tsms\2-0\lib\varglobal.js"></script>
+	<script src="\\tsms\2-0\lib\pathglobal.js"></script>
+	<script src="\\tsms\2-0\lib\actstructure.js"></script>
+	<script src="\\tsms\2-0\lib\actarray.js"></script>
+	<script src="\\tsms\2-0\lib\actfile.js"></script>
+	<script src="\\tsms\2-0\lib\getarrattr.js"></script>
+	<script src="\\tsms\2-0\lib\getvarurl.js"></script>
+	<script src="\\tsms\2-0\lib\chdata.js"></script>
+	<script src="\\tsms\2-0\lib\expdata.js"></script>
+	<script src="\\tsms\2-0\lib\jquery-ui\external\jquery\jquery.js"></script>
+	<script src="\\tsms\2-0\lib\jquery-ui\jquery-ui.js"></script>
+	<link href="\\tsms\2-0\lib\jquery-ui\jquery-ui.css" rel="stylesheet">
+	<title>
+		Проверка и экспорт структуры данных
+	</title>
+</head>
+<body>
+
+<script language="javascript" type="text/javascript">
+	var PathReport = GetPathFile(GetVarUrl(window.location.search)["path"]);
+	var PathReports = fso.GetParentFolderName(PathReport);
+	
+	if (!fso.FileExists(PathReport)){
+		alert("Ошибка!!! Нет файла КМД: Пакет документов раздела КМД");
+		//document.location.href = PathModelsShell;
+		document.location.href = PathMain+"/"+"index.html";
+	} else {
+		domxml.async = false;  
+		domxml.load(PathReport);
+		
+		var PathReportDoc = domxml.documentElement;
+		var Model = PathReportDoc.getAttribute("Модель").replace(/\s+/g,"");
+		var NumbOrder = PathReportDoc.getAttribute("Номер");
+		var ObjectOrder = PathReportDoc.getAttribute("Объект");
+		var MasterUser = PathReportDoc.getAttribute("Ответственный");
+		var DataReport = PathReportDoc.getAttribute("Дата");
+		var DocsReport = PathReportDoc.getAttribute("Раздел");
+		var PathModel = PathReports.substring(0, (PathReports.indexOf(Model)+Model.length));
+		for (StrPathReport = 0; StrPathReport < PathReportDoc.getElementsByTagName("Документы").length; StrPathReport++)
+		{
+			var PathReportDocs = PathReportDoc.getElementsByTagName("Документы")[StrPathReport];
+			var NumbReport = PathReportDocs.getAttribute("Номер");
+			var NameReport = PathReportDocs.getAttribute("Название");
+			var UserReport = PathReportDocs.getAttribute("xml");
+			if(StrPathReport < 4)	
+			{
+				if(StrPathReport == 1) var FilesStructure = GetFileStructure(UserReport);
+				UserReport = PathReports+"\\"+UserReport;
+				if (!fso.FileExists(UserReport)) 
+				{
+					alert("Ошибка!!! Нет файла КМД-"+NumbReport+": "+NameReport);
+					document.location.href = PathReport;
+					exit();
+				}
+			}   
+		}
+		this.document.write("<font face=\"Times\" size=\"5\"><b>Проверка структуры данных</b></font>");
+		this.document.write("<br/>");
+		this.document.write("<font face=\"Times\"><b>Шифр документа:      </b>"+NumbOrder+"-"+DocsReport+"-"+NumbReport+"</font><br>");
+		this.document.write("<font face=\"Times\"><b>№ Заказа:      </b>"+NumbOrder+"</font><br>");
+		this.document.write("<font face=\"Times\"><b>Объект:        </b>"+ObjectOrder+"</font><br>");
+		this.document.write("<font face=\"Times\"><b>Ответственный: </b>"+MasterUser+"</font><br>");
+		this.document.write("<font face=\"Times\"><b>Дата:  </b>"+DataReport+"</font>");
+		this.document.write("<br/>");
+		this.document.write("<br/>");
+		var CheckStructure = GetCheckStructure(PathModel);
+		OutCrashStructure(CheckStructure);
+	}
+	
+function GetFileStructure(FileIn)
+{	
+	 ArrOut = new Array();
+	 ArrOut[0] = FileIn;
+	 return ArrOut;
+}
+
+
+function OutCrashStructure(CheckStructure){
+	if(CheckStructure != "") {
+		this.document.write('<font face=\"Times\" size=\"3\"><b>Таблица 1. Отсутствующие каталоги структуры буферных папок модели</b></font>');
+		this.document.write('<table cellspacing="1" bgcolor="#99ccff" width="600" STYLE="border-collapse: collapse; border: 1px solid black;" border="2">');
+		this.document.write('<thead>');
+		this.document.write('<td width="50" align="center"></td>');
+		this.document.write('<td align="center"><font face="Times" size="2"><b>Имя папки</b></font></td>');			  
+		this.document.write('</thead>');
+		this.document.write('');
+
+		for(i = 0; i < CheckStructure.length; i++)
+		{	
+			this.document.write('<tr bgcolor="#d1e3f0">');   
+			this.document.write('<td align="center"><font face="Times" size="2">'+ (i + 1) +'</font></td>');   
+			this.document.write('<td align="center"><font face="Times" size="2">'+CheckStructure[i]+'</font></td>'); 
+			this.document.write('</tr>'); 		   
+		}
+		this.document.write('</table>');
+		this.document.write("<br/>");
+	}
+}
+
+	
+	<!-- this.document.write('<font face="Times" size="4"><b>Шапка:</b></font>'); -->
+	<!-- for (var a = 0; a < GetAttrHead().length; ++a){ -->
+		<!-- this.document.write('<br>'); -->
+		<!-- this.document.write(GetAttrHead()[a]); -->
+	<!-- } -->
+	<!-- this.document.write('<br>'); -->
+	<!-- this.document.write('<br>'); -->
+
+	this.document.write('<font face="Times" size="4"><b>Проверка наличия файлов:</b></font>');
+	for (var a = 0; a < GetAttrFiles().length; ++a){
+		this.document.write('<br>');
+		this.document.write(GetAttrFiles()[a]);
+	}
+	this.document.write('<br>');
+	this.document.write('<br>');
+	
+	this.document.write('<font face="Times" size="4"><b>Проверка контрольных сумм файлов:</b></font>');
+	for (var a = 0; a < GetAttrHash().length; ++a){
+		this.document.write('<br>');
+		this.document.write(GetAttrHash()[a]);
+	}
+	this.document.write('<br>');
+	this.document.write('<br>');
+	
+	this.document.write('<font face="Times" size="4"><b>Сравнение данных:</b></font>');
+	for (var a = 0; a < GetAttrCompare().length; ++a){
+		this.document.write('<br>');
+		this.document.write(GetAttrCompare()[a]);
+	}
+	this.document.write('<br>');
+	this.document.write('<br>');
+	
+	this.document.write('<font face="Times" size="4"><b>Проверка количества от перевыбора:</b></font>');
+	for (var a = 0; a < GetAttrCheckSum().length; ++a){
+		this.document.write('<br>');
+		this.document.write(GetAttrCheckSum()[a]);
+	}
+	this.document.write('<br>');
+	this.document.write('<br>');
+	
+	this.document.write('<font face="Times" size="4"><b>Вывод (Обработка ошибок):</b></font>');
+	for (var a = 0; a < GetAttrOut().length; ++a){
+		this.document.write('<br>');
+		this.document.write(GetAttrOut()[a]);
+	}
+	this.document.write('<br>');
+	this.document.write('<br>');
+	
+	this.document.write('<font face="Times" size="4"><b>Вывод (Заголовки таблицы):</b></font>');
+	for (var a = 0; a < GetAttrHeadTable().length; ++a){
+		this.document.write('<br>');
+		this.document.write(GetAttrHeadTable()[a]);
+	}
+	this.document.write('<br>');
+	this.document.write('<br>');
+</script>
+
+</body>
+<html>

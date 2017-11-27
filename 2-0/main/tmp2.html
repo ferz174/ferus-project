@@ -1,0 +1,82 @@
+﻿<html>
+<head>
+	<script src="\\tsms\2-0\lib\varglobal.js"></script>
+	<script src='\\tsms\2-0\lib\actfile.js'></script>
+</head>
+
+<body>
+<script type='text/javascript'>
+	var FileIn = document.location.href;
+	var FolderIn = "d:/work/ex/06-07-2017";
+	FolderIn = fso.GetParentFolderName(document.location.href);
+	
+	console.log(fso.GetFolder(FolderIn));
+
+	var SubFolders = new Enumerator(fso.GetFolder(FolderIn).SubFolders);
+	var SubFoldersOut = new Object();
+	for (; !SubFolders.atEnd(); SubFolders.moveNext())
+	{
+		FilesFolder = GetFilesFolder(SubFolders.item());
+		for (var Part in FilesFolder)
+		{
+			if (SubFoldersOut.hasOwnProperty(Part) && FilesFolder[Part].info.Size == SubFoldersOut[Part].Size) {
+				SubFoldersOut[Part].FoldersParent[SubFoldersOut[Part].FoldersParent.length] = FilesFolder[Part].info.FoldersParent[0];
+			} else {
+				SubFoldersOut[Part] = FilesFolder[Part].info;
+			}
+		}
+	}
+	
+	for (var Part in SubFoldersOut)
+	{
+		this.document.write("Позиция: "+SubFoldersOut[Part].Number);
+		this.document.write("</br>");
+		this.document.write("В каких чертежах: "+SubFoldersOut[Part].FoldersParent);
+		this.document.write("</br>");
+		this.document.write("</br>");
+	}	
+	
+function GetFilesFolder(FolderIn){
+	var FolderName = fso.GetBaseName(FolderIn);
+	if (fso.FolderExists(FolderIn)) {
+		var ModID = "-";
+		var FilesOut = new Object();
+		var Files = new Enumerator(fso.GetFolder(FolderIn).files);
+		for (; !Files.atEnd(); Files.moveNext())
+		{
+			var FileName = fso.GetBaseName(Files.item().Name);
+			var FileInfo = new Object();
+			if (FileName.indexOf(ModID)+1) {
+				var FileModIDInfo = new Object();
+				FileModIDInfo["info"] = GetFileInfo(Files.item());
+				FileModIDInfo.info["Number"] = Number(FileName.substring(0, (FileName.indexOf(ModID))));
+				FilesOut[FileName.substring(0, FileName.indexOf(ModID))] = FileModIDInfo;
+			} else {
+				FileInfo["info"] = GetFileInfo(Files.item());
+				FilesOut[FileName] = FileInfo;
+			}
+		}
+		return(FilesOut);
+		
+		function GetFileInfo(ObjIn)
+		{
+			var info = new Object();
+			var FileName = fso.GetBaseName(ObjIn.Name);
+			info["info"] = FileName;
+			info["File"] = ObjIn.Name;
+			info["Name"] = FileName;
+			info["Path"] = ObjIn.Path.replace(/\\/g,"/");
+			info["Size"] = Number(ObjIn.Size);
+			info["Extension"] = fso.GetExtensionName(ObjIn.Name);
+			var FolderParent = [];
+			FolderParent.push(ObjIn.ParentFolder.Name.replace(/\\/g,"/"));
+			info["FoldersParent"] = FolderParent;
+			return info;
+		}
+	} else {
+		NoteEventAlert("Событие: Нет папки с заказом \""+FolderName+"\" в папке сводка", "Обратитесь в конструкотрский отдел", false, 60000, "error");
+		return null;
+	}
+}
+</script>
+</body>

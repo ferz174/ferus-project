@@ -1,0 +1,258 @@
+﻿<!doctype html>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html" charset="utf-8"> 
+	<meta http-equiv="Refresh" content="900" />
+	<script src="\\tsms\2-0\lib\varglobal.js"></script>
+	<script src="\\tsms\2-0\lib\pathglobal.js"></script>
+	<script src="\\tsms\2-0\lib\actstructure.js"></script>
+	<script src="\\tsms\2-0\lib\actarray.js"></script>
+	<script src="\\tsms\2-0\lib\actfile.js"></script>
+	<script src="\\tsms\2-0\lib\getarrattr.js"></script>
+	<script src="\\tsms\2-0\lib\getvarurl.js"></script>
+	<script src="\\tsms\2-0\lib\chdata.js"></script>
+	<script src="\\tsms\2-0\lib\expdata.js"></script>
+	<script src="\\tsms\2-0\lib\expsrv.js"></script>
+	<script src="\\tsms\2-0\lib\jquery-ui\external\jquery\jquery.js"></script>
+	<script src="\\tsms\2-0\lib\jquery-ui\jquery-ui.js"></script>
+	<link href="\\tsms\2-0\lib\jquery-ui\jquery-ui.css" rel="stylesheet">
+	<title>
+		Проверка и экспорт структуры данных
+	</title>
+</head>
+<body>
+
+<script language="javascript" type="text/javascript">
+	var PathReport = GetVarUrl(window.location.search)["path"];
+	var PathReports = fso.GetParentFolderName(PathReport);
+
+	if (!fso.FileExists(PathReport)){
+		alert("Ошибка!!! Нет файла КМД: Пакет документов раздела КМД");
+		//document.location.href = PathModelsShell;
+		document.location.href = PathMain+"/"+"index.html";
+	} else {
+		domxml.async = false;  
+		domxml.load(PathReport);
+		
+		var PathReportDoc = domxml.documentElement;
+		var Model = PathReportDoc.getAttribute("Модель").replace(/\s+/g,"");
+		var NumbOrder = PathReportDoc.getAttribute("Номер");
+		var ObjectOrder = PathReportDoc.getAttribute("Объект");
+		var MasterUser = PathReportDoc.getAttribute("Ответственный");
+		var DataReport = PathReportDoc.getAttribute("Дата");
+		var DocsReport = PathReportDoc.getAttribute("Раздел");
+		var PathModel = PathReports.substring(0, (PathReports.indexOf(Model)+Model.length));
+		for (StrPathReport = 0; StrPathReport < PathReportDoc.getElementsByTagName("Документы").length; StrPathReport++)
+		{
+			var PathReportDocs = PathReportDoc.getElementsByTagName("Документы")[StrPathReport];
+			var NumbReport = PathReportDocs.getAttribute("Номер");
+			var NameReport = PathReportDocs.getAttribute("Название");
+			var UserReport = PathReportDocs.getAttribute("xml");
+			if(StrPathReport < 4)
+			{
+				UserReport = PathReports+"\\"+UserReport;
+				if(StrPathReport == 1) var FilesStructure = GetFileStructure(UserReport);
+				if (!fso.FileExists(UserReport)) 
+				{
+					alert("Ошибка!!! Нет файла КМД-"+NumbReport+": "+NameReport);
+					document.location.href = PathReport;
+					exit();
+				}
+			}   
+		}
+		this.document.write("<font face=\"Times\" size=\"5\"><b>Проверка структуры данных</b></font>");
+		this.document.write("<br/>");
+		this.document.write("<font face=\"Times\"><b>Шифр документа:      </b>"+NumbOrder+"-"+DocsReport+"-"+NumbReport+"</font><br>");
+		this.document.write("<font face=\"Times\"><b>№ Заказа:      </b>"+NumbOrder+"</font><br>");
+		this.document.write("<font face=\"Times\"><b>Объект:        </b>"+ObjectOrder+"</font><br>");
+		this.document.write("<font face=\"Times\"><b>Ответственный: </b>"+MasterUser+"</font><br>");
+		this.document.write("<font face=\"Times\"><b>Дата:  </b>"+DataReport+"</font>");
+		this.document.write("<br/>");
+		this.document.write("<br/>");
+		var CheckStructure = GetCheckStructure(PathModel);
+		OutCrashStructure(CheckStructure);
+	}
+
+/* <a href="javascript:history.back();">Назад</a>
+var valueDataModel = [];
+getFileModel();
+function getFileModel(){
+var FileModel = PathModels+ "\\"+Model+"\\TeklaStructuresModel.xml";
+	if (fso.FileExists(FileModel)){		  
+   		msxml.URL = FileModel;
+		FileModel = msxml.root;	
+		for(b = 0; b < FileModel.children.length; b++){
+			StrModel = FileModel.children.item(b);
+			if(StrModel.tagName == "MODEL"){
+				valueDataModel[0] = StrModel.children.item("Designer").text;			
+				Description = StrModel.children.item("Description").text;
+				valueDataModel[1] = Description;
+				return;
+			}
+		}
+	} 
+	else 
+	{
+	    valueDataModel[0] = "";
+		valueDataModel[1] = "";
+	}
+}*/
+
+function GetFileStructure(FileIn)
+{	
+	 ArrOut = new Array();
+	 ArrOut[0] = FileIn;
+	 return ArrOut;
+}
+
+function OutCrashStructure(CheckStructure){
+	if(CheckStructure.length > 0) {
+		this.document.write('<font face=\"Times\" size=\"3\"><b>Таблица 1. Отсутствующие каталоги структуры буферных папок модели</b></font>');
+		this.document.write('<table cellspacing="1" bgcolor="#99ccff" width="600" STYLE="border-collapse: collapse; border: 1px solid black;" border="2">');
+		this.document.write('<thead>');
+		this.document.write('<td width="50" align="center"></td>');
+		this.document.write('<td align="center"><font face="Times" size="2"><b>Имя папки</b></font></td>');			  
+		this.document.write('</thead>');
+		this.document.write('');
+
+		for(i = 0; i < CheckStructure.length; i++)
+		{	
+			this.document.write('<tr bgcolor="#d1e3f0">');   
+			this.document.write('<td align="center"><font face="Times" size="2">'+ (i + 1) +'</font></td>');   
+			this.document.write('<td align="center"><font face="Times" size="2">'+CheckStructure[i]+'</font></td>'); 
+			this.document.write('</tr>'); 		   
+		}
+		this.document.write('</table>');
+		this.document.write("<br/>");
+	}
+}
+
+var twoArryData = [];
+var twoArryDataMark = [];
+
+for(i = 0; i < FilesStructure.length; i++){
+        var KMD_1_0 = FilesStructure[i];
+			
+			insExistenceFile(KMD_1_0);
+			
+			if(twoArryDataMark.length > 0)
+			{
+			  this.document.write('<font face=\"Times\" size=\"3\"><b>Таблица 3. Отсутствующие данные по сборкам</b></font>');
+			  this.document.write('<table cellspacing="1" width="1000" bgcolor="#99ccff" STYLE="border-collapse: collapse; border: 1px solid black;" border="2">');
+			  this.document.write('<thead>');
+			  this.document.write('<td width="60" align="center"><font face="Times" size="2"><b>Номер</b></font></td>');
+			  this.document.write('<td width="200" align="center"><font face="Times" size="2"><b>Конструктив</b></font></td>');
+			  this.document.write('<td width="270" align="center"><font face="Times" size="2"><b>Чертеж марки</b></font></td>');
+			  this.document.write('<td width="40" align="center"><font face="Times" size="2"><b>Кол.</b></font></td>');
+			  this.document.write('<td width="50" align="center"><font face="Times" size="2"><b>Вес</b></font></td>');
+			  this.document.write('<td width="160" align="center"><font face="Times" size="2"><b>Габариты</b></font></td>');
+			  this.document.write('<td width="150" align="center"><font face="Times" size="2"><b>Примечание</b></font></td>');
+			  this.document.write('<td width="40" align="center"><font face="Times" size="2"><b>PDF</b></font></td>');
+			  this.document.write('</thead>');
+		      this.document.write('');
+				for(i_two = 0; i_two < twoArryDataMark.length; i_two++)
+			    {	
+			         //this.document.write('<tr id="DataAss" bgcolor="#d1e3f0">');   
+					 if ((twoArryDataMark[i_two][3]).indexOf("?")!=-1) this.document.write('<tr id="DataAss" bgcolor="fdbcb4">');  
+					  else this.document.write('<tr id="DataAss" bgcolor="white">'); 
+					  
+					 this.document.write('<td align="center"><font face="Times" size="2">'+twoArryDataMark[i_two][3]+'</font></td>');   
+					 this.document.write('<td align="center"><font face="Times" size="2">'+twoArryDataMark[i_two][4]+'</font></td>'); 
+					 this.document.write('<td align="center"><font face="Times" size="2">'+twoArryDataMark[i_two][5]+'</font></td>'); 
+					 this.document.write('<td align="center"><font face="Times" size="2">'+twoArryDataMark[i_two][6]+'</font></td>'); 
+					 this.document.write('<td align="center"><font face="Times" size="2">'+twoArryDataMark[i_two][7]+'</font></td>'); 
+					 this.document.write('<td align="center"><font face="Times" size="2">L:'+twoArryDataMark[i_two][8]+' W:'+twoArryDataMark[i_two][9]+' H:'+twoArryDataMark[i_two][10]+'</font></td>'); 
+					 if(twoArryDataMark[i_two][11] != null) this.document.write('<td align="center"><font face="Times" size="2">'+twoArryDataMark[i_two][11]+'</font></td>');
+                     else this.document.write('<td align="center"><font face="Times" size="2"></font></td>');		 
+					
+					if (fso.FileExists(twoArryDataMark[i_two][1]))
+    					this.document.write('<td align="center"><font face="Times" size="2"><a href='+twoArryDataMark[i_two][2]+' "><img height="15" border="0" src="' + PathIMGMain + '\\filefind-ok.png"></a></font></td>');
+					else 
+			   	        this.document.write('<td align="center"><font face="Times" size="2"><img height="15" border="0" src="' + PathIMGMain + '\\filefind-no.png" alt="Нет PDF-файла"></font></td>');
+					 
+					 this.document.write('</tr>'); 
+					// this.document.write(''); 		   
+	     	    }
+			  this.document.write('</table>');
+			  this.document.write("<br/>");
+			}
+			
+			//Обработка позиций
+            if(twoArryData.length > 0)
+			{
+			  this.document.write('<font face=\"Times\" size=\"3\"><b>Таблица 4. Отсутствующие данные по деталям</b></font>');
+			  this.document.write('<table cellspacing="1" width="1000" bgcolor="#99ccff" STYLE="border-collapse: collapse; border: 1px solid black;" border="2">');
+			  this.document.write('<thead>');
+			  this.document.write('<td width="60" align="center"><font face="Times" size="2"><b>Номер</b></font></td>');
+			  this.document.write('<td width="200" align="center"><font face="Times" size="2"><b>Наименование</b></font></td>');
+			  this.document.write('<td width="200" align="center"><font face="Times" size="2"><b>Профиль</b></font></td>');
+			  this.document.write('<td width="70" align="center"><font face="Times" size="2"><b>Материал</b></font></td>');
+			  this.document.write('<td width="40" align="center"><font face="Times" size="2"><b>Кол.</b></font></td>');
+			  this.document.write('<td width="50" align="center"><font face="Times" size="2"><b>Длина</b></font></td>');
+			  this.document.write('<td width="50" align="center"><font face="Times" size="2"><b>Ширина</b></font></td>');
+			  this.document.write('<td width="50" align="center"><font face="Times" size="2"><b>Вес</b></font></td>');
+			  this.document.write('<td width="120" align="center"><font face="Times" size="2"><b>Примечание</b></font></td>');
+			  this.document.write('<td width="40" align="center"><font face="Times" size="2"><b>PDF</b></font></td>');
+			  this.document.write('<td width="40" align="center"><font face="Times" size="2"><b>DXF</b></font></td>');
+			  this.document.write('<td width="40" align="center"><font face="Times" size="2"><b>NC</b></font></td>');
+			  this.document.write('</thead>');
+		      for(i_two = 0; i_two < twoArryData.length; i_two++)
+			    {	
+				    if ((twoArryData[i_two][1]).indexOf("?")!=-1) this.document.write('<tr id="DataAss" bgcolor="fdbcb4">');  
+					else this.document.write('<tr id="DataAss" bgcolor="white">'); 
+					
+					if (twoArryData[i_two][10]=="false") {this.document.write('<td align="center"><font face="Times" size="2">'+twoArryData[i_two][1]+'</font></td>');
+					} else {this.document.write('<td align="center"><font face="Times" size="2"><a href='+twoArryData[i_two][11]+' title="Чертеж поз. '+twoArryData[i_two][1]+'" target="_blank">'+twoArryData[i_two][1]+'</a></font></td>');}
+					
+					this.document.write('<td align="left"><font face="Times" size="2" contenteditable="true" title="Доступно исправление текста">'+twoArryData[i_two][2]+'</font></td>');
+					this.document.write('<td align="left"><font   face="Times" size="2">'+twoArryData[i_two][3]+'</font></td>');
+					this.document.write('<td align="left"><font   face="Times" size="2">'+twoArryData[i_two][4]+'</font></td>');
+					this.document.write('<td align="center"><font face="Times" size="2">'+twoArryData[i_two][5]+'</font></td>');
+					this.document.write('<td align="right"><font  face="Times" size="2">'+twoArryData[i_two][6]+'</font></td>');
+					this.document.write('<td align="right"><font  face="Times" size="2">'+twoArryData[i_two][7]+'</font></td>');
+					this.document.write('<td align="right"><font  face="Times" size="2">'+twoArryData[i_two][8]+'</font></td>');
+					this.document.write('<td align="center"><font face="Times" size="2">'+twoArryData[i_two][9]+'</font></td>');					
+					
+					
+					//Обработка PDF  href='+twoArryData[i_two][11]+' title="Чертеж поз. '+twoArryData[i_two][1]+'"              href="#" onclick="OpenFile(\"'+s_temp+'\")"
+					if (!twoArryData[i_two][9].indexOf("б/ч")) {this.document.write('<td align="center"><font face="Times" size="2"><img height="15" border="0" src="' + PathIMGMain + '\\filefind_prof.png"></font></td>');												
+					} else if (twoArryData[i_two][10]=="true") {this.document.write('<td align="center"><font face="Times" size="2"><a href="#" onclick="OpenFile(\''+twoArryData[i_two][11]+'\')"   ><img height="15" border="0" src="' + PathIMGMain + '\\filefind-ok.png"></a></font></td>');								
+					} else {this.document.write('<td align="center"><font face="Times" size="2"><img height="15" border="0" src="' + PathIMGMain + '\\filefind-no.png"  alt="Нет PDF-файла"></font></td>');}
+					
+					//Обработка DXF
+					if (twoArryData[i_two][13]=="true" && twoArryData[i_two][3].indexOf("Лист")!=-1) {this.document.write('<td align="center"><font face="Times" size="2"><a href="#" onclick="OpenFile(\''+twoArryData[i_two][14]+'\')" title="Чертеж поз. '+twoArryData[i_two][1]+'"><img height="15" border="0" src="' + PathIMGMain + '\\filefind_dxf.png"></a></font></td>');
+					} else if (twoArryData[i_two][13]=="true" && twoArryData[i_two][3].indexOf("Лист")==-1) {this.document.write('<td bgcolor="ff99b8" align="center"><font face="Times" size="2"><a href="#" onclick="OpenFile(\''+twoArryData[i_two][14]+'\')" title="Чертеж поз. '+twoArryData[i_two][1]+'"><img height="15" border="0" src="' + PathIMGMain + '\\filefind_prof.png"></a></font></td>');
+					} else if (twoArryData[i_two][13]=="false" && twoArryData[i_two][3].indexOf("Лист")==-1) { this.document.write('<td align="center"><font face="Times" size="2"><img height="15" border="0" src="' + PathIMGMain + '\\filefind_prof.png"></font></td>');
+					} else {this.document.write('<td align="center"><font face="Times" size="2"><img height="15" border="0" src="' + PathIMGMain + '\\filefind-no.png"  alt=\'Нет DXF-файла\'></font></td>');}
+							
+					//Обработка NC
+					if (twoArryData[i_two][16]=="true"){this.document.write('<td align="center"><font face="Times" size="2"><a href="#" onclick="OpenFile(\''+twoArryData[i_two][17]+'\')" title="Чертеж поз. '+twoArryData[i_two][1]+'"><img height="15" border="0" src="' + PathIMGMain + '\\filefind_nc.png"></a></font></td>');								
+					} else { this.document.write('<td align="center"><font face="Times" size="2"><img height="15" border="0" src="' + PathIMGMain + '\\filefind-no.png" alt="Нет NC-файла"></font></td>');}					
+					
+					this.document.write('</tr>'); 			         
+	     	    }
+			  this.document.write('</table>');
+			}
+
+
+}
+if(CheckStructure.length == 0 && twoArryData.length == 0 && twoArryDataMark.length == 0) 
+{
+		alert("Ошибок нет.");
+		processMain(Model);
+		//document.location.href = PathExport +"\\"+Model+"\\Reports\\"+idVersionXMLMain(Model)+"\\KMD.xml";
+		document.location.href = PathExport +"\\"+Model+"\\Reports\\KMD.xml";
+}
+else
+{
+//createErrorFile(Model);
+ if (confirm("Найдены ошибки. Выполнить экспорт файлов?")) {
+	  processMain(Model);	  
+	}
+}
+
+</script>	
+
+</body>	
+
+</html>

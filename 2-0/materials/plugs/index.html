@@ -1,0 +1,89 @@
+﻿<!doctype html>
+<html>
+	<script src="/2-0/lib/varglobal.js"></script>
+	<script src="/2-0/lib/pathglobal.js"></script>
+	<script src="/2-0/lib/sorttable.js"></script>
+	<script src="/2-0/lib/jquery-latest.js"></script>
+	
+<head>
+	<meta http-equiv="content-type" content="text/html" charset="utf-8"> 
+	<meta http-equiv="Refresh" content="900" />
+	<title>
+		Реестр плагинов
+	</title>
+	<pre>
+			<font face="Times" size="4"><b>ОБОЛОЧКА СИСТЕМЫ УПРАВЛЕНИЯ МОДЕЛЯМИ - TeklaStructuresModelsShell 2.0</b></font></pre>
+</head>
+<body>
+
+<script language="javascript" type="text/javascript">
+	this.document.write('Вы здесь: <font face="Times" size="4"><b>РЕЕСТР ПЛАГИНОВ</b></font>');
+	this.document.write('</br></br>');
+	start();
+	
+function start(){
+	this.document.write('* - по работе плагинов просьба обращаться к разработчикам');
+	this.document.write('<table class="sortable" id="sample" border="1" cellpadding="2" STYLE="border-collapse: collapse; border: 1px solid black; table-layout: fixed; width: 1200;">');
+	this.document.write('<thead bgcolor="#99CCFF" height="25">');
+	this.document.write('<th width="50" align="center"><font face="Times" size="3"><b>№</b></font></th>');
+	this.document.write('<th width="50" align="center"><font face="Times" size="3"><b></b></font></th>');
+	this.document.write('<th width="150" align="center"><font face="Times" size="3"><b>ЭСКИЗ</b></font></th>');
+	this.document.write('<th width="200" align="center"><font face="Times" size="3"><b>ИМЯ</b></font></th>');
+	this.document.write('<th width="130" align="center"><font face="Times" size="3"><b>РАЗРАБОТЧИК</b></font></th>');
+	this.document.write('<th width="300" align="center"><font face="Times" size="3"><b>КРАТКОЕ ОПИСАНИЕ</b></font></th>');
+	this.document.write('<th align="center"><font face="Times" size="3"><b>ПРИМЕНЕНИЕ</b></font></th>');
+	this.document.write('</thead>');
+	this.document.write('<tbody>');
+	this.document.write('<tr height="100">');
+}
+</script>
+
+<script language="javascript" type="text/javascript">
+var PlugsArr = new Array();
+
+function ReadFile(){
+	if (true == fso.FileExists(FilePlugsDesc)){
+		ReadingFile = fso.openTextFile(FilePlugsDesc, 1, false);
+		for (var a = 0; !ReadingFile.AtEndOfLine; ++a)
+		{
+			PlugsArr[a] = (+[a])+"_"+ReadingFile.readLine();
+		}
+		ReadingFile.Close();
+		return PlugsArr;
+	}
+}
+
+ReadFile();
+PlugsList();
+
+function PlugsList(){
+
+	for (var b = 1; b < PlugsArr.length; ++b)
+	{
+		Plugs = PlugsArr[b];
+		Numb = Plugs.substr(0, Plugs.indexOf("_"));
+		Name = Plugs.substr(Plugs.indexOf("_")+1, Plugs.indexOf(":")-(Plugs.indexOf("_")+1));
+		Desc = Plugs.substr(Plugs.indexOf(":")+2, Plugs.indexOf("/")-(Plugs.indexOf(":")+2));
+		Dev = Plugs.substr(Plugs.indexOf("/")+1, Plugs.length);
+		IMGPlugs = PathIMGPlugs+"/"+Name+".png";
+		PathCom = PathPlugs+"/"+Name+".cs";
+		
+		if (fso.FileExists(PathCom)){
+			this.document.write('<td align="center"><a href="'+PathCom+'" title="Скачать плагин: '+Name+'['+Numb+']" download>'+Numb+'</a></td>');
+			this.document.write('<td align="center"><img height="25" border="0" src="'+PathIMGMain+'/yes.png" alt="Статус плагина: '+Name+'"></td>');
+		} else {
+			this.document.write('<td align="center">'+Numb+'</td>');
+			this.document.write('<td align="center"><img height="25" border="0" src="'+PathIMGMain+'/no.png" alt="Статус плагина: '+Name+'"></td>');
+		}
+		
+		this.document.write('<td align="center"><img height="100" src="'+IMGPlugs+'" alt="'+Name+'"></td>');
+		this.document.write('<td align="left"><b>'+Name+'</b></td>');
+		this.document.write('<td align="left">'+Dev+'</td>');
+		this.document.write('<td align="left">'+Desc+'</td>');
+		this.document.write('<td align="left"></td>');
+		this.document.write('</tr>');
+		this.document.write('</tbody>');
+	}
+	return;
+}
+</script>

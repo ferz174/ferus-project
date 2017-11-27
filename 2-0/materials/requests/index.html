@@ -1,0 +1,82 @@
+﻿<html>
+<head>
+	<meta http-equiv="content-type" content="text/html" charset="utf-8"> 
+	<meta http-equiv="Refresh" content="900" />
+	<script src="/2-0/lib/varglobal.js"></script>
+	<script src="/2-0/lib/pathglobal.js"></script>
+	<script src="/2-0/lib/actstructure.js"></script>
+	<script src="/2-0/lib/sorttable.js"></script>
+	<title>
+		Предложения и замечания
+	</title>
+	<pre>
+			<font face="Times" size="4"><b>ОБОЛОЧКА СИСТЕМЫ УПРАВЛЕНИЯ МОДЕЛЯМИ - TeklaStructuresModelsShell 2.0</b></font></pre>
+</head>
+<body>
+
+<script language="javascript" type="text/javascript">
+	this.document.write('Вы здесь: <font face="Times" size="4"><b>Предложения и замечания</b></font>');
+	this.document.write('</br></br>');
+
+</script>
+
+<div>
+    <h3><span>Когда будет реализован функционал ВЫ ЗДЕСЬ СМОЖЕТЕ:</span></h3>
+    <ul>
+		<li>задавать вопросы по работе с TeklaStructures (ответы на частые будете видеть в FAQ)</li>
+		<li>предлагать свои решения и выносить их на обсуждения по работе TeklaStructures (макросы, компоненты, плагины, настройки и т.д. и т.п.)</li>
+		<li>оставлять замечания и пожелания по работе оболочки и ее улучшению</li>
+    </ul>
+</div>
+
+<script language="javascript" type="text/javascript">
+var wsh = new ActiveXObject("WScript.Shell");
+var fso = new ActiveXObject("Scripting.FileSystemObject");
+var ComsArr = new Array();
+
+function ReadFile(){
+	if (true == fso.FileExists(ComsFile)){
+		ReadingFile = fso.openTextFile(ComsFile, 1, false);
+		for (var a = 0; !ReadingFile.AtEndOfLine; ++a)
+		{
+			ComsArr[a] = (+[a])+"_"+ReadingFile.readLine();
+		}
+		ReadingFile.Close();
+		return ComsArr;
+	}
+}
+
+ReadFile();
+ComsList();
+
+function ComsList(){
+
+	for (var b = 1; b < ComsArr.length; ++b)
+	{
+		Coms = ComsArr[b];
+		Numb = Coms.substr(0, Coms.indexOf("_"));
+		Name = Coms.substr(Coms.indexOf("_")+1, Coms.indexOf(":")-(Coms.indexOf("_")+1));
+		Desc = Coms.substr(Coms.indexOf(":")+2, Coms.indexOf("/")-(Coms.indexOf(":")+2));
+		Dev = Coms.substr(Coms.indexOf("/")+1, Coms.length);
+		ComsIMG = PathComsIMG+"/"+Numb+".png";
+		PathCom = PathComs+"/"+Numb+".uel";
+		
+		// if (fso.FileExists(PathCom)){
+			// this.document.write('<td align="center"><a href="'+PathCom+'" title="Скачать компонент: '+Name+'('+Numb+')">'+Numb+'</a></td>');
+			// this.document.write('<td align="center"><img height="25" border="0" src="'+PathIMG+'/yes.png" alt="Статус компонента: '+Name+'"></td>');
+		// } else {
+			// this.document.write('<td align="center">'+Numb+'</td>');
+			// this.document.write('<td align="center"><img height="25" border="0" src="'+PathIMG+'/no.png" alt="Статус компонента: '+Name+'"></td>');
+		// }
+		
+		// this.document.write('<td align="center"><img height="100" src="'+ComsIMG+'" alt="'+Name+'"></td>');
+		// this.document.write('<td align="left"><b>'+Name+'</b></td>');
+		// this.document.write('<td align="left">'+Dev+'</td>');
+		// this.document.write('<td align="left">'+Desc+'</td>');
+		// this.document.write('<td align="left"></td>');
+		// this.document.write('</tr>');
+		// this.document.write('</tbody>');
+	}
+	return;
+}
+</script>

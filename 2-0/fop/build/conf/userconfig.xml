@@ -1,0 +1,142 @@
+<!--<!DOCTYPE configuration SYSTEM "config.dtd">-->
+<!-- 
+     this file contains templates which allow an user easy 
+     configuration of Fop. Actually normally you don't need this configuration 
+     file, but if you need to change configuration, you should
+     always use this file and *not* config.xml. 
+     Usage: java org.apache.fop.apps.Fop -c userconfig.xml -fo fo-file -pdf pdf-file
+-->
+
+
+<configuration>
+
+<!--  
+baseDir: normally the base directory is the directory where the fo file is 
+         located. if you want to specify your own, uncomment this entry.
+         This value can also be a URL. Actually, the value is converted to 
+         a URL.
+-->
+<!-- 
+  <entry>
+    <key>baseDir</key>
+    <value></value>
+  </entry>
+-->
+
+<!--  
+fontBaseDir: Similar to baseDir, except that this value is used for fonts. If
+         it isn't specified, the value from baseDir is used.
+-->
+<!-- 
+  <entry>
+    <key>fontBaseDir</key>
+    <value></value>
+  </entry>
+-->
+
+<!--
+************************************************************************
+                        HYPHENATION 
+************************************************************************
+-->
+  
+<!--
+   hyphenation directory 
+   if you want to specify your own directory with hyphenation pattern
+   then uncomment the next entry and add the directory name
+-->
+
+<!--
+  <entry>
+    <key>hyphenation-dir</key>
+    <value>/java/xml-fop/hyph</value>
+  </entry>
+-->
+
+<!--
+************************************************************************
+  Add fonts here
+************************************************************************
+-->
+
+<fonts>
+	<font metrics-file="\\tsms\2-0\fop\build\conf\fonts\ariali.xml" kerning="yes" embed-file="\\tsms\2-0\fop\build\conf\fonts\ariali.ttf">
+	  <font-triplet name="ariali" style="normal" weight="normal"/>
+	</font>
+	<font metrics-file="\\tsms\2-0\fop\build\conf\fonts\arial.xml" kerning="yes" embed-file="\\tsms\2-0\fop\build\conf\fonts\arial.ttf">
+	  <font-triplet name="arial" style="normal" weight="normal"/>
+	  <font-triplet name="arialmt" style="normal" weight="normal"/>
+	</font>
+	<font metrics-file="\\tsms\2-0\fop\build\conf\fonts\arialbd.xml" kerning="yes" embed-file="\\tsms\2-0\fop\build\conf\fonts\arialbd.ttf">
+	  <font-triplet name="arialbd" style="normal" weight="normal"/>
+	</font>
+	<font metrics-file="\\tsms\2-0\fop\build\conf\fonts\arialbi.xml" kerning="yes" embed-file="\\tsms\2-0\fop\build\conf\fonts\arialbi.ttf">
+	  <font-triplet name="arialbi" style="normal" weight="normal"/>
+	</font>
+	<font metrics-file="\\tsms\2-0\fop\build\conf\fonts\gost_a.xml" kerning="yes" embed-file="\\tsms\2-0\fop\build\conf\fonts\gost_a.ttf">
+	  <font-triplet name="gost_a" style="normal" weight="normal"/>
+	</font>
+	<font metrics-file="\\tsms\2-0\fop\build\conf\fonts\gost_b.xml" kerning="yes" embed-file="\\tsms\2-0\fop\build\conf\fonts\gost_b.ttf">
+	  <font-triplet name="gost_b" style="normal" weight="normal"/>
+	</font>
+	<font metrics-file="\\tsms\2-0\fop\build\conf\fonts\gost_bi.xml" kerning="yes" embed-file="\\tsms\2-0\fop\build\conf\fonts\gost_bi.ttf">
+	  <font-triplet name="gost_bi" style="italic" weight="normal"/>
+	</font>
+	<font metrics-file="\\tsms\2-0\fop\build\conf\fonts\gost_bb.xml" kerning="yes" embed-file="\\tsms\2-0\fop\build\conf\fonts\gost_bb.ttf">
+	  <font-triplet name="gost_bb" style="bold" weight="normal"/>
+	</font>
+	<font metrics-file="\\tsms\2-0\fop\build\conf\fonts\gostsec.xml" kerning="yes" embed-file="\\tsms\2-0\fop\build\conf\fonts\gostsec.ttf">
+	  <font-triplet name="gostsec" style="normal" weight="normal"/>
+	</font>
+	<font metrics-file="\\tsms\2-0\fop\build\conf\fonts\times.xml" kerning="yes" embed-file="\\tsms\2-0\fop\build\conf\fonts\times.ttf">
+	  <font-triplet name="times" style="normal" weight="normal"/>
+	</font>
+	<font metrics-file="\\tsms\2-0\fop\build\conf\fonts\timesi.xml" kerning="yes" embed-file="\\tsms\2-0\fop\build\conf\fonts\timesi.ttf">
+	  <font-triplet name="timesi" style="normal" weight="normal"/>
+	</font>
+	<font metrics-file="\\tsms\2-0\fop\build\conf\fonts\timesbd.xml" kerning="yes" embed-file="\\tsms\2-0\fop\build\conf\fonts\timesbd.ttf">
+	  <font-triplet name="timesbd" style="normal" weight="normal"/>
+	</font>
+	<font metrics-file="\\tsms\2-0\fop\build\conf\fonts\timesbi.xml" kerning="yes" embed-file="\\tsms\2-0\fop\build\conf\fonts\timesbi.ttf">
+	  <font-triplet name="timesbi" style="normal" weight="normal"/>
+	</font>
+ <!-- example -->
+ <!--
+ <font metrics-file="arial.xml" kerning="yes" embed-file="arial.ttf">
+    <font-triplet name="Arial" style="normal" weight="normal"/>
+    <font-triplet name="ArialMT" style="normal" weight="normal"/>
+ </font>
+ <font metrics-file="arialb.xml" kerning="yes" embed-file="arialb.ttf">
+    <font-triplet name="Arial" style="normal" weight="bold"/>
+    <font-triplet name="ArialMT" style="normal" weight="bold"/>
+ </font>
+ <font metrics-file="ariali.xml" kerning="yes" embed-file="ariali.ttf">
+    <font-triplet name="Arial" style="italic" weight="normal"/>
+    <font-triplet name="ArialMT" style="italic" weight="normal"/>
+ </font>
+ <font metrics-file="arialbi.xml" kerning="yes" embed-file="arialbi.ttf">
+    <font-triplet name="Arial" style="italic" weight="bold"/>
+    <font-triplet name="ArialMT" style="italic" weight="bold"/>
+ </font>
+ -->
+ <!-- Example Japanese fonts
+ <font metrics-file="msgothic.xml" embed-file="D:\winnt\font\msgothic.ttc" kerning="yes">
+    <font-triplet name="Gothic" style="normal" weight="normal"/>
+    <font-triplet name="Gothic" style="normal" weight="bold"/>
+    <font-triplet name="Gothic" style="italic" weight="normal"/>
+    <font-triplet name="Gothic" style="italic" weight="bold"/>
+ </font>
+ <font metrics-file="msmincho.xml" embed-file="Cyberbit.ttf" kerning="yes">
+    <font-triplet name="Mincho" style="normal" weight="normal"/>
+    <font-triplet name="Mincho" style="normal" weight="bold"/>
+    <font-triplet name="Mincho" style="italic" weight="normal"/>
+    <font-triplet name="Mincho" style="italic" weight="bold"/>
+   </font>
+  -->
+</fonts>
+
+
+</configuration>
+
+
+

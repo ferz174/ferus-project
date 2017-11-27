@@ -1,0 +1,76 @@
+﻿.note_event_alert_outer {
+	position: absolute;
+	top: 0; left: 0;
+	width: 100%;
+	
+	z-index:9999;
+}
+.note_event_alert_outer .frame {
+	position:relative;
+	z-index:9999;
+}
+.note_event_alerts_holder {
+	position:absolute;
+	left:65%; top:0;
+	width:35%;
+	z-index:9999;
+}
+.note_event_alerts_holder .note_event_alert {
+	position:absolute;
+	top:-1000px;
+	background-color:#FFEBA0;
+	font:1.1em Tahoma, sans-serif;
+	border:1px solid #FFFFFF;
+	margin-left:60px;
+}
+.note_event_alerts_holder .note_event_alert .note_event_alert_header {
+	font-size:1.1em;
+	margin:10px 20px 0;
+}
+.note_event_alerts_holder .note_event_alert .note_event_alert_text {
+	font-size:0.8em;
+	margin:10px 20px;
+}
+.note_event_alerts_holder .note_event_alert .note_event_alert_refresh_button {
+	position:absolute;
+	padding:10px;
+	top:0;
+	right:0;
+	outline:none;
+	z-index:9999;
+}
+.note_event_alerts_holder .note_event_alert .note_event_alert_refresh_button img{
+	height: 25px;
+	width: 25px;
+	border: 0;
+}
+.note_event_alerts_holder .note_event_alert .note_event_alert_reset_button {
+	position:absolute;
+	padding:10px;
+	margin:0px 30px;
+	top:0;
+	right:0;
+	outline:none;
+}
+.note_event_alerts_holder .note_event_alert .note_event_alert_reset_button img{
+	height: 25px;
+	width: 25px;
+	border: 0;
+}
+.note_event_alerts_holder .note {
+	color:#FFF;
+	background-color:#72b333;
+}
+.note_event_alerts_holder .warning {
+	color:#FFF;
+	background-color:#f59829;
+}
+.note_event_alerts_holder .attention {
+	color:#FFF;
+	background-color:#ff99b8;
+}
+.note_event_alerts_holder .error {
+	color:#FFF;
+	background-color:#ed1f24;
+}
+critical error

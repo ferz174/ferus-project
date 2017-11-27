@@ -1,0 +1,103 @@
+﻿<html>
+<head>
+	<meta http-equiv="content-type" content="text/html" charset="utf-8"> 
+	<meta http-equiv="Refresh" content="900" />
+	<script src="/2-0/lib/sorttable.js"></script>
+	<script src="/2-0/lib/jquery-latest.js"></script>
+	<script src="/2-0/lib/pathglobal.js"></script>
+	<style>
+		h3 { cursor:pointer;}
+	</style>
+	<title>
+		FAQ - Часто задаваемые вопросы
+	</title>
+	<pre>
+			<font face="Times" size="4"><b>ОБОЛОЧКА СИСТЕМЫ УПРАВЛЕНИЯ МОДЕЛЯМИ - TeklaStructuresModelsShell 2.0</b></font></pre>
+</head>
+<body>
+
+<script language="javascript" type="text/javascript">
+	this.document.write('Вы здесь: <font face="Times" size="4"><b>FAQ - Часто задаваемые вопросы</b></font>');
+	this.document.write('</br></br>');
+
+var wsh = new ActiveXObject("WScript.Shell");
+var fso = new ActiveXObject("Scripting.FileSystemObject");
+var ComsArr = new Array();
+
+function ReadFile(){
+	if (fso.FileExists(FileComsDesc)){
+		ReadingFile = fso.openTextFile(FileComsDesc, 1, false);
+		for (var a = 0; !ReadingFile.AtEndOfLine; ++a)
+		{
+			ComsArr[a] = (+[a])+"_"+ReadingFile.readLine();
+		}
+		ReadingFile.Close();
+		return ComsArr;
+	}
+}
+
+	$(document).ready(function(){
+		$("ul").hide();
+		$("h3 span").click(function(){
+			$(this).parent().next().slideToggle();
+		});
+	});
+
+ReadFile();
+ComsList();
+
+function ComsList(){
+
+	for (var b = 1; b < ComsArr.length; ++b)
+	{
+		Coms = ComsArr[b];
+		Numb = Coms.substr(0, Coms.indexOf("_"));
+		Name = Coms.substr(Coms.indexOf("_")+1, Coms.indexOf(":")-(Coms.indexOf("_")+1));
+		Desc = Coms.substr(Coms.indexOf(":")+2, Coms.indexOf("/")-(Coms.indexOf(":")+2));
+		Dev = Coms.substr(Coms.indexOf("/")+1, Coms.length);
+		ComsIMG = PathIMGComs+"/"+Numb+".png";
+		PathCom = PathComs+"/"+Numb+".uel";
+		
+		// if (fso.FileExists(PathCom)){
+			// this.document.write('<td align="center"><a href="'+PathCom+'" title="Скачать компонент: '+Name+'('+Numb+')">'+Numb+'</a></td>');
+			// this.document.write('<td align="center"><img height="25" border="0" src="'+PathIMG+'/yes.png" alt="Статус компонента: '+Name+'"></td>');
+		// } else {
+			// this.document.write('<td align="center">'+Numb+'</td>');
+			// this.document.write('<td align="center"><img height="25" border="0" src="'+PathIMG+'/no.png" alt="Статус компонента: '+Name+'"></td>');
+		// }
+		
+		// this.document.write('<td align="center"><img height="100" src="'+ComsIMG+'" alt="'+Name+'"></td>');
+		// this.document.write('<td align="left"><b>'+Name+'</b></td>');
+		// this.document.write('<td align="left">'+Dev+'</td>');
+		// this.document.write('<td align="left">'+Desc+'</td>');
+		// this.document.write('<td align="left"></td>');
+		// this.document.write('</tr>');
+		// this.document.write('</tbody>');
+	}
+	return;
+}
+</script>
+
+<script language="javascript" type="text/javascript">
+this.document.write('<div class="box">');
+this.document.write('<h3><span>1. Решение проблемы с вырожденными деталями в сторонних моделях</span></h3>');
+this.document.write('<ul>');
+this.document.write('Для отображения вырожденных деталей в моделях сторонних разработчиков следует выполнить несколько действий:');
+this.document.write('<li>в папке модели исправить или добавить параметр в файле "options.ini" на XS_SOLID_USE_HIGHER_ACCURACY=FALSE');
+this.document.write('</br>Затем открыть модель и посмотреть</li>');
+this.document.write('</br><img height="250" src="'+PathIMGFAQ+'/1_1.png" alt="1" border="0" />');
+this.document.write('<li>если этого будет мало, удалить файлы в папке модели: environment.db и options_model.db - Открыть модель и посмотреть</li>');
+this.document.write('</br><img height="350" src="'+PathIMGFAQ+'/1_2.png" alt="1" border="0" />');
+this.document.write('</br>эти действия удалят файлы настройки чужой среды и приведут модель к нашей среде, но в результатае этого могут быть');
+this.document.write('</br>проблемы с разницей в весе между чертежом и 1С:УПП, которые могут быть решены во 2-ом вопросе');
+this.document.write('</li>');
+this.document.write('</ul>');
+this.document.write('</div>');
+
+this.document.write('<div class="box">');
+this.document.write('<h3><span>2. Решение проблемы с весом при выгрузке данных из модели в 1С:УПП</span></h3>');
+this.document.write('<ul>');
+this.document.write('<li>В режиме наполнения</li>');
+this.document.write('</ul>');
+this.document.write('</div>');
+</script>

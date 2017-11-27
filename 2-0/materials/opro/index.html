@@ -1,0 +1,168 @@
+﻿<html>
+<head>
+	<meta http-equiv="content-type" content="text/html" charset="utf-8"> 
+	<meta http-equiv="Refresh" content="900" />
+	<script src="http://tsms/2-0/lib/varglobal.js"></script>
+	<script src="http://tsms/2-0/lib/pathglobal.js"></script>
+	<script src="http://tsms/2-0/lib/sorttable.js"></script>
+	<script src="http://tsms/2-0/lib/modules/jquery-latest.js"></script>
+	<style>
+		h3 { cursor:pointer;}
+	</style>
+	<title>
+		Руководство по OpenProject
+	</title>
+	<pre>
+		<font face="Times" size="4"><b>ОБОЛОЧКА СИСТЕМЫ УПРАВЛЕНИЯ МОДЕЛЯМИ - TeklaStructuresModelsShell 2.0</b></font></pre>
+</head>
+<body>
+
+<script language="javascript" type="text/javascript">
+	var PathIMGOpro = Resource+"/"+PathIMGOpro;
+	this.document.write('Вы здесь: <font face="Times" size="4"><b>Руководство по OpenProject - Управление проектами</b></font>');
+	this.document.write('</br></br>');
+
+	$(document).ready(function(){
+		$("ul").hide();
+		$("h3 span").click(function(){
+			$(this).parent().next().slideToggle();
+		});
+	});
+
+this.document.write('<div class="box">');
+this.document.write('<h3><span>1. Вход. Мои страницы</span></h3>');
+this.document.write('<ul>');
+this.document.write('<li>Страница входа:</li>');
+this.document.write('</br></br><img height="500" src="'+PathIMGOpro+'/1.png" alt="1" border="0" /></br></br>');
+this.document.write('<li>Главная страница:</li>');
+this.document.write('</br></br><img height="500" src="'+PathIMGOpro+'/2.png" alt="2" border="0" /></br></br>');
+this.document.write('<li>Моя рабочая страница:</li>');
+this.document.write('</br></br><img height="500" src="'+PathIMGOpro+'/3.png" alt="3" border="0" /></br></br>');
+this.document.write('</li>');
+this.document.write('</ul>');
+this.document.write('</div>');
+
+this.document.write('<div class="box">');
+this.document.write('<h3><span>2. Все проекты. Создание подпроекта</span></h3>');
+this.document.write('<ul>');
+this.document.write('<li>Все проекты:</li>');
+this.document.write('</br></br><img height="500" src="'+PathIMGOpro+'/4.png" alt="4" border="0" /></br></br>');
+this.document.write('<li>ПРОЕКТЫ ОТДЕЛА ПКО:</li>');
+this.document.write('</br></br><img height="500" src="'+PathIMGOpro+'/5.png" alt="5" border="0" /></br></br>');
+this.document.write('<li>Свойства корневого проекта "ПРОЕКТЫ ОТДЕЛА ПКО". Создание Нового подпроекта:</li>');
+this.document.write('</br></br><img height="500" src="'+PathIMGOpro+'/6.png" alt="6" border="0" /></br></br>');
+this.document.write('</li>');
+this.document.write('</ul>');
+this.document.write('</div>');
+
+this.document.write('<div class="box">');
+this.document.write('<h3><span>3. Свойства проекта (подпроекта). Этапы работы.</span></h3>');
+this.document.write('<ul>');
+this.document.write('<li>Свойства проекта (подпроекта):</li>');
+this.document.write('</br></br><img height="500" src="'+PathIMGOpro+'/7.png" alt="7" border="0" /></br></br>');
+this.document.write('<li>Редактирование свойств проекта. Добавление этапов:</li>');
+this.document.write('</br></br><img height="500" src="'+PathIMGOpro+'/8.png" alt="8" border="0" /></br></br>');
+this.document.write('<li>Этапы работы (По ссылке "Создать новый этап проекта"):</li>');
+this.document.write('</br></br><img height="500" src="'+PathIMGOpro+'/9.png" alt="9" border="0" /></br></br>');
+this.document.write('</li>');
+this.document.write('</ul>');
+this.document.write('</div>');
+
+this.document.write('<div class="box">');
+this.document.write('<h3><span>4. Участники. Пакеты работ</span></h3>');
+this.document.write('<ul>');
+this.document.write('<li>Участники (Роли, группы, разрешения):</li>');
+this.document.write('</br>- Роль "Отвественный (Начальник КБ)" - разрешения на полное редактирование проекта (кроме удаления проекта);');
+this.document.write('</br>- Роль "Назначенный (Конструктор)" - разрешения по минимуму, ничего не доступно к просмотру</br>равнозначна роли "Анонимный" пользователь (как при входе в OpenProject без регистрации);');
+this.document.write('</br>- Роль "Мониторинг (Руководство)" - разрешения для просмотра, но могут быть изменены;');
+this.document.write('</br>- Роль "Администратор проекта" - разрешения по максимуму: просмотр и редактирование, но только внутри проекта</br>(открыты все поля и настройки);');
+this.document.write('</br></br><img height="500" src="'+PathIMGOpro+'/10.png" alt="10" border="0" /></br></br>');
+this.document.write('<li>Редактирование участников (разрешений):</li>');
+this.document.write('</br><font color="red">НЕ ПЕРЕДАВАЙТЕ СВОЮ УЧЕТНУЮ ЗАПИСЬ ДРУГОМУ ЧЕЛОВЕКУ (УЧАСТНИКУ ПРОЕКТА).</br>ДОБАВЛЯЙТЕ ДЛЯ НЕГО РОЛЬ В ВАШЕМ ПРОЕКТЕ:</br>ДЛЯ ПРОСМОТРА - "Мониторинг (Руководство)",</br>ДЛЯ РЕДАКТИРОВАНИЯ - "Отвественный (Начальник КБ);"</font>');
+this.document.write('</br></br><img height="500" src="'+PathIMGOpro+'/11.png" alt="11" border="0" /></br></br>');
+this.document.write('<li>Пакеты работ:</li>');
+this.document.write('</br><font color="red">СИТУАЦИЯ ПО ИЗМЕНЕНИЮ ДАТЫ ВЫПОЛНЕНИЯ РАБОТЫ, СМЕНА ПРОЕКТА</br>УЧАСТНИКОМ И Т.Д. ДОЛЖНА БЫТЬ ИЗМЕНЕНА ПО НАСТУПЛЕНИЮ СОБЫТИЯ</br>(Т.Е. НЕЗАМЕДЛИТЕЛЬНО) ДЛЯ ДЕЙСТВИТЕЛЬНОЙ АКТУАЛИЗАЦИИ ЗАНЯТОСТИ!!!;</font>');
+this.document.write('</br></br><img height="500" src="'+PathIMGOpro+'/12.png" alt="12" border="0" /></br></br>');
+this.document.write('</li>');
+this.document.write('</ul>');
+this.document.write('</div>');
+
+this.document.write('<div class="box">');
+this.document.write('<h3><span>6. Веха. Стадия. Задание (Назначение заданий).</span></h3>');
+this.document.write('<ul>');
+this.document.write('<li>Веха - отправная или завершающая точка выполнения работ (указывается одной датой,</br>может быть назначена всей группе "Конструктора КБ №", а не конкретному участнику):</li>');
+this.document.write('</br></br><img height="500" src="'+PathIMGOpro+'/13.png" alt="13" border="0" /></br></br>');
+this.document.write('<li>Стадия (для отражения одного вида работ (Моделирование) - стадия не используется,</br>следует переходить сразу к заданию):</li>');
+this.document.write('</br></br><img height="500" src="'+PathIMGOpro+'/14.png" alt="14" border="0" /></br></br>');
+this.document.write('<li>Задание - непосредственное назначение исполнения работы конкретному лицу, участнику проекта:</li>');
+this.document.write('</br></br><img height="500" src="'+PathIMGOpro+'/15.png" alt="15" border="0" /></br></br>');
+this.document.write('</li>');
+this.document.write('</ul>');
+this.document.write('</div>');
+
+this.document.write('<div class="box">');
+this.document.write('<h3><span>7. Манипуляции с пакетами работ. Режимы просмотра.</span></h3>');
+this.document.write('<ul>');
+this.document.write('<li>Манипуляции с пакетами работ (копирование, перемещение, редактирование, удаление):</li>');
+this.document.write('</br>На текущий момент программа позволяет заводить только новые записи работ, не позволяя их редактировать.</br>Возможно это связано с пониманием процесса как "только вперед", т.е. если статус работы или дата</br>исполнения меняются, следует заводить другую работу, с удалением устаревшей.</br>Удобнее заводить работу копированием из контекстного меню строки с редактированием требуемых изменений;');
+this.document.write('</br></br><img height="500" src="'+PathIMGOpro+'/16.png" alt="16" border="0" /></br></br>');
+this.document.write('<li>Режимы просмотра (Детальный просмотр):</li>');
+this.document.write('</br></br><img height="500" src="'+PathIMGOpro+'/17.png" alt="17" border="0" /></br></br>');
+this.document.write('<li>Режимы просмотра (Полноэкранный просмотр):</li>');
+this.document.write('</br></br><img height="500" src="'+PathIMGOpro+'/18.png" alt="18" border="0" /></br></br>');
+this.document.write('</li>');
+this.document.write('</ul>');
+this.document.write('</div>');
+
+this.document.write('<div class="box">');
+this.document.write('<h3><span>8. Обзор. Дорожная карта. Деятельность.</span></h3>');
+this.document.write('<ul>');
+this.document.write('<li>Обзор:</li>');
+this.document.write('</br>Через вкладку "Обзор" проекта можно быстро перейти к редактированию свойств проекта,</br> добавить нового участника, назначить работу;');
+this.document.write('</br></br><img height="500" src="'+PathIMGOpro+'/19.png" alt="19" border="0" /></br></br>');
+this.document.write('<li>Дорожная карта:</li>');
+this.document.write('</br></br><img height="500" src="'+PathIMGOpro+'/20.png" alt="20" border="0" /></br></br>');
+this.document.write('<li>Деятельность:</li>');
+this.document.write('</br></br><img height="500" src="'+PathIMGOpro+'/21.png" alt="21" border="0" /></br></br>');
+this.document.write('</li>');
+this.document.write('</ul>');
+this.document.write('</div>');
+
+this.document.write('<div class="box">');
+this.document.write('<h3><span>9. График (Настройка). График (Отображение). Диаграмма занятости (Моделирование).</span></h3>');
+this.document.write('<ul>');
+this.document.write('<li>График (Настройка):</li>');
+this.document.write('</br></br><img height="500" src="'+PathIMGOpro+'/22.png" alt="22" border="0" /></br></br>');
+this.document.write('<li>График (Отображение):</li>');
+this.document.write('</br></br><img height="500" src="'+PathIMGOpro+'/23.png" alt="23" border="0" /></br></br>');
+this.document.write('<li>Диаграмма занятости (Моделирование) (В режиме разработки):</li>');
+this.document.write('</br>Для перехода к диаграмме занятости модельщиков пройдите по ссылке из оболочки;</br><a href="'+WorkGraph+'" title="Представление процессов отдела ПКО основанное на OpenProject и моделях TeklaStrustures" target="_blank">ПРОЦЕССЫ ОТДЕЛА ПКО (ДИАГРАММЫ)</a>');
+this.document.write('</br></br><img height="500" src="'+PathIMGOpro+'/24.png" alt="24" border="0" /></br></br>');
+this.document.write('В данном примере произошло наложение 2-х проектов у одного исполнителя.</br>Это является ошибкой. Один конструктор не может работать на 2-х и более проектах</br>одновременно. Для исправления такой ситуации следует исправить назначенную</br>работу над проектом "120417" как описано в разделе 7');
+this.document.write('</li>');
+this.document.write('</ul>');
+this.document.write('</div>');
+
+this.document.write('<div class="box">');
+this.document.write('<h3><span>10. Быстрое назначение задания. Заключение.</span></h3>');
+this.document.write('<ul>');
+this.document.write('<li>Быстрое назначение задания (при созданном проекте):</li>');
+this.document.write('</br>Из ниспадающего меню "Все функции" любой страницы программы OpenProject выбрать</br>пункт "Пакеты работ". Добавить новый пакет работ по кнопке "+Пакет работ". И заполнив</br>первоочередные поля - заполнить остальные точно также как указано в пункте 6</br>для назначения задания;');
+this.document.write('</br></br><img height="500" src="'+PathIMGOpro+'/25.png" alt="25" border="0" /></br></br>');
+this.document.write('<li>Заключение:</li>');
+this.document.write('</br>+ OpenProject как система управления проектами позволяет "двигать" процессы по статусам');
+this.document.write('</br>в разрезе План/Факт (Назначение Задания/Исполнение Задания), применительно к разным процессам');
+this.document.write('</br>по видам работ (Моделирование/Оформление чертежей/Проверка Чертежей) с указанием непосредственных');
+this.document.write('</br>участников абсолютно универсально, какой бы процесс в ней не отражался.');
+this.document.write('</br>+ Вывод информации в виде графиков, диаграмм, отчетов в любом виде и форме, с учетом открытого и');
+this.document.write('</br>легкодоступного интерфейса программирования.');
+this.document.write('</br>+ Хранение данных в виде Базы Данных позволяет обеспечить программе защищенный многопользовательский');
+this.document.write('</br>доступ как самой системой, так и внешних инструментов.');
+this.document.write('</br>+++ Полная интеграция за счет базы данных и открытого интерфейса программирования позволяет');
+this.document.write('</br>получить на основе OpenProject\'а автоматизированную (а в последствии и автоматическую систему)');
+this.document.write('</br>прослеживания прогресса работы над проектом On-line (в режиме реального времени) не прибегая');
+this.document.write('</br>к задействованию участников проекта вносить статусы и даты в ручном режиме.');
+this.document.write('</li>');
+this.document.write('</ul>');
+this.document.write('</div>');
+</script>

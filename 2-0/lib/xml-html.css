@@ -1,0 +1,29 @@
+﻿.file_upload{
+    display: block;
+    position: relative;
+    overflow: hidden;
+    font-size: 1em;
+    height: 2em;
+    line-height: 1em
+}
+.file_upload .label{
+    display: block;
+	font-size: 1.2em;
+	padding-top: -2em;
+}
+.file_upload .label{
+    float: left;
+    width: 500px;
+    height: 100%;
+    text-align: left;
+}
+.button{
+    float: left;
+    width: 650px;
+    height: 100%;
+    text-align: left;
+}
+
+.mark{
+	font-size: 1.2em;
+}

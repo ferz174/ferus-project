@@ -1,0 +1,327 @@
+﻿<!doctype html>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html" charset="utf-8"> 
+	<meta http-equiv="Refresh" content="900" />
+	<link rel='stylesheet' type='text/css' href='http://tsms/2-0/lib/actevent.css'></link>
+	<link rel='stylesheet' type='text/css' href='http://tsms/2-0/lib/xml-html.css'></link>
+	<script charset='utf-8' src="http://tsms/2-0/lib/varglobal.js"></script>
+	<script charset='utf-8' src="http://tsms/2-0/lib/pathglobal.js"></script>
+	<script charset='utf-8' src="http://tsms/2-0/lib/actstructure.js"></script>
+	<script charset='utf-8' src="http://tsms/2-0/lib/actarray.js"></script>
+	<script charset='utf-8' src="http://tsms/2-0/lib/actfile.js"></script>
+	<script charset='utf-8' src='http://tsms/2-0/lib/actwind.js'></script>
+	<script charset='utf-8' src='http://tsms/2-0/lib/actevent.js'></script>
+	<script charset='utf-8' src='http://tsms/2-0/lib/actxsl.js'></script>
+	<script charset='utf-8' src='http://tsms/2-0/lib/acthtml.js'></script>
+	<script charset='utf-8' src="http://tsms/2-0/lib/actobject.js"></script>
+	<script charset='utf-8' src="http://tsms/2-0/lib/statmodel.js"></script>
+	<script charset='utf-8' src="http://tsms/2-0/lib/sorttable.js"></script>
+	<script charset='utf-8' src='http://tsms/2-0/lib/modules/json3.js'></script>
+		<style>
+			p {
+				margin: 10px;
+				margin-left: 270px;
+			}
+		</style>
+	<title>
+		Управление данными
+	</title>
+	<pre>
+			<font face="Times" size="4"><b>ОБОЛОЧКА СИСТЕМЫ УПРАВЛЕНИЯ МОДЕЛЯМИ - TeklaStructuresModelsShell 2.0</b></font></pre>
+</head>
+<body id='Document'>
+
+<script language="javascript" type="text/javascript">
+	var Day = new Date();
+	var DayHour = Day.toLocaleString();
+	var DiapPort = [1241,1242,1243,1245,1246,1247,1248,1249,1251,1252,1253,1254,1255,1256,1257,1258,1259,1261,1262,1263,1264,1265,1266,1267,1268,1269];
+	var Description = null;
+	if (!nax) {
+		var PathSrv = fso.GetDrive(fso.GetDriveName(fso.GetAbsolutePathName(PathModels)));
+		var PathIMGMain = PathShell+"/img/main";
+	} else {
+		var PathSrv = PathSrvModels;
+		var PathIMGMain = Resource+"/"+PathIMGMain;
+	}
+</script>
+
+<script language="javascript" type="text/javascript">
+	this.document.write('<pre><font face="Times" size="4">&#09;&#09;<b><a href="'+PathModelsShell+'" title="Рабочие модели">РАБОЧИЕ</a>&#09;&#09;&#09;&#09;&#09;<a href="" onclick="Tmp()" title="Временные модели">ВРЕМЕННЫЕ</a>&#09;&#09;&#09;&#09;&#09;<a href="#" onclick="Archive()" title="Архивные модели">АРХИВНЫЕ</a></b></font></pre>');
+	this.document.write('<font face="Times" size="4"><a href="'+PathOpro+'" title="Открытое программное обеспечение OpenProject" target="_blank">УПРАВЛЕНИЕ ПРОЕКТАМИ</a></font>');
+	this.document.write('</br><font face="Times" size="4"><a href="'+WorkGraph+'" title="Представление процессов отдела ПКО основанное на OpenProject и моделях TeklaStrustures" target="_blank">ПРОЦЕССЫ ОТДЕЛА ПКО (ДИАГРАММЫ)</a></font>');
+	this.document.write('</br><font face="Times" size="4"><a href="'+PathCom+'" title="Постоянно пополняется">РЕЕСТР КОМПОНЕНТОВ</a></font>');
+	this.document.write('</br><font face="Times" size="4"><a href="'+PathPlug+'" title="Постоянно пополняется">РЕЕСТР ПЛАГИНОВ</a></font>');
+	
+	this.document.write('</br><font face="Times" size="4"><a href="'+PathManOpro+'" title="В разработке">РУКОВОДСТВО ПО OpenProject</a></font>');
+	this.document.write('</br><font face="Times" size="4"><a href="'+PathManEnv+'" title="В разработке">РУКОВОДСТВО ПО СРЕДЕ "STANDARD"</a></font>');
+		
+	this.document.write('</br><a href="'+PathCAD+'/Распоряжения/" title="Ознакомиться с работой"><font face="Times" size="4">Учебные материалы для работы со средой, оболочкой и Tekla (пока в таком виде)</font></a>');
+	this.document.write('</br><font face="Times" size="4"><a href="'+PathFAQ+'" title="FAQ - Часто задаваемые вопросы">FAQ - Часто задаваемые вопросы</a></font>');
+	this.document.write('</br><font face="Times" size="4"><a href="'+PathReq+'" title="Ваши пожелания и хотелки можете размещать здесь">Предложения и замечания</a></font>');
+	this.document.write('</br><font face="Times" size="4"><a href="'+PathDev+'" title="Что будет разрабатывается и находится на стадии разработки в данный момент">Разработка</a></font>');
+
+	this.document.write('</br></br>Вы здесь: <font face="Times" size="4"><b><font color="red">РАБОЧИЕ</font> МОДЕЛИ</b></font>');
+	this.document.write('</br>');
+	this.document.write('</br>Сервер моделей: <font face="Times" color="blue" size="4">'+PathSrvModels+'</font>');
+	this.document.write('</br>Порты сервера моделей: <font face="Times" color="blue" size="4">'+DiapPort[0]+'-'+DiapPort[DiapPort.length-1]+'</font>');
+	this.document.write('</br>Порт для ВРЕМЕННЫХ МОДЕЛЕЙ: <font face="Times" color="red" size="4"><a  href="#" onclick="remusr(\'1244\')" title="Перезагрузка сервера временных моделей">1244</a></font>');
+	this.document.write('</br>Доступный объем для моделей, Гб: <font face="Times" color="blue" size="4">'+Math.ceil(PathSrv.FreeSpace/(1024*1024*1024))+" / "+Math.ceil(PathSrv.TotalSize/(1024*1024*1024))+'</font>');
+	
+	headtable();
+	
+function headtable(){
+	this.document.write('<table class="sortable" id="sample" border="1" cellpadding="2" STYLE="border-collapse: collapse; border: 1px solid black; table-layout: fixed;">');
+	this.document.write('<thead bgcolor="#99CCFF" height="25" align="center">');
+	this.document.write('<th width="60"><font face="Times" size="3"><b>ПОРТ</b></font></th>');
+	this.document.write('<th width="150"><font face="Times" size="3"><b>ЗАКАЗ</b></font></th>');
+	this.document.write('<th width="80"><font face="Times" size="3"><b>Версия</b></font></th>');
+	this.document.write('<th width="80" ><font face="Times" size="3"><b>№ БЮРО</b></font></th>');
+	this.document.write('<th width="160" colspan="2"><font face="Times" size="3"><b>ДАТЫ</b></font></th>');
+	this.document.write('<th width="170"><font face="Times" size="3"><b>НАЗНАЧЕННЫЙ</b></font></th>');
+	this.document.write('<th width="450"><font face="Times" size="3"><b>ОБЪЕКТ</b></font></th>');
+	this.document.write('<th width="50"></th>');
+	this.document.write('<th width="50"></th>');
+	this.document.write('<th width="200" colspan="3" align="center"><font face="Times" size="3"><b>ДОКУМЕНТАЦИЯ</b></font></th>');
+	this.document.write('<th width="80"><font face="Times" size="3"><b>ИМПОРТ</b></font></th>');
+	this.document.write('<th width="80"><font face="Times" size="3"><b>ЭКСПОРТ</b></font></th>');
+	//this.document.write('<th width="80"><font face="Times" size="3"><b>tmp</b></font></th>');
+	this.document.write('</thead>');
+	this.document.write('<tr bgcolor="#99CCFF" align="center">');
+	this.document.write('<td><font face="Times" size="3" color="blue"><b>№<sup>2</sup></b></font></td>');
+	this.document.write('<td><font face="Times" size="3"><b>НОМЕР ПРОЕКТА</b></font></td>');
+	this.document.write('<td><font face="Times" size="3"><b>Изм</b></font></td>');
+	this.document.write('<td><font face="Times" size="3"><b>СТРОИТ.</b></font></td>');
+	this.document.write('<td><font face="Times" size="3"><b>НАЧ.</b></font></td>');
+	this.document.write('<td><font face="Times" size="3"><b>ЗАВЕРШ.</b></font></td>');
+	this.document.write('<td><font face="Times" size="3"><b>РАЗРАБОТЧИК</b></font></td>');
+	this.document.write('<td><font face="Times" size="3"><b>ОПИСАНИЕ</b></font></td>');
+	this.document.write('<td></td>');
+	this.document.write('<td></td>');
+	this.document.write('<td><font face="Times" size="3" color="blue"><b>КМД</b></font></td>');
+	//this.document.write('<td><font face="Times" size="3" color="blue"><b>КМД*</b></font></td>');
+	this.document.write('<td><font face="Times" size="3" color="blue"><b>ДМС</b></font></td>');
+	this.document.write('<td><font face="Times" size="3" color="blue"><b>КДД</b></font></td>');
+	this.document.write('<td><font face="Times" size="3" color="blue"><b>СТОРОН.<sup>3</sup></b></font></td>');
+	this.document.write('<td><font face="Times" size="3" color="blue"><b>ОТПРАВ.<sup>4</sup></b></font></td>');
+	//this.document.write('<td><font face="Times" size="3" color="blue"><b>tmp<sup>5</sup></b></font></td>');
+	this.document.write('</tr>');
+	this.document.write('<tbody>');
+	this.document.write('<tr height="40">');
+}
+</script>
+
+<script language="javascript" type="text/javascript">
+
+function Archive(){
+	this.document.write('<pre>');
+	this.document.write('<font face="Times" size="4"><b>&#09;&#09;&#09;ОБОЛОЧКА СИСТЕМЫ УПРАВЛЕНИЯ МОДЕЛЯМИ - TeklaStructuresModelsShell 2.0</b></font>');
+	this.document.write('</pre>');
+	this.document.write('Вы здесь: <font face="Times" size="4"><b><font color="red">АРХИВНЫЕ</font> МОДЕЛИ</b></font>');
+	this.document.write('</br></br>');
+	
+	headtable();
+	fileoutmodels(PathModelsArch+"/"+FileModels);
+}
+
+function Tmp(){
+	this.document.write('<pre>');
+	this.document.write('<font face="Times" size="4"><b>&#09;&#09;&#09;ОБОЛОЧКА СИСТЕМЫ УПРАВЛЕНИЯ МОДЕЛЯМИ - TeklaStructuresModelsShell 2.0</b></font>');
+	this.document.write('</pre>');
+	this.document.write('Вы здесь: <font face="Times" size="4"><b><font color="red">ВРЕМЕННЫЕ</font> МОДЕЛИ</b></font>');
+	this.document.write('</br></br>');
+	
+	headtable();
+	fileoutmodels(PathModelsTmp+"/"+FileModels);
+}
+
+	//var temp = GetObjXML("http://tsms/2-0/temp/TeklaStructuresModels.xml");
+	//console.log(temp);
+	
+	fileoutmodels(PathModels+"/"+FileModels);
+	totable();
+
+function fileoutmodels(FileIn){
+	if (!nax && fso.FileExists(FileIn)) {
+		msxml.URL = FileIn;
+		FileRoot = msxml.root;
+		for(a = 0; a < FileRoot.children.length; a++){
+			if(FileRoot.children.item(a).tagName == "MODEL") modelslist(FileRoot.children.item(a));
+		}
+	} else {
+		parser = function(xmlStr) {
+			return ( new window.DOMParser() ).parseFromString(xmlStr, "text/xml");
+		};
+	}
+	//alert(xmlDoc.documentElement.nodeName);
+}
+
+function fileoutmodel(FileIn){
+	msxml.URL = FileIn;
+	for(b = 0; b < msxml.root.children.length; b++){
+		if(msxml.root.children.item(b).tagName == "MODEL"){
+			this.document.write('<td align="left"><font face="Times" size="3">'+msxml.root.children.item(b).children.item("Designer").text+'</font></td>');
+			
+			var DescriptionModel = msxml.root.children.item(b).children.item("Description").text;
+			if (DescriptionModel != "") Description = DescriptionModel;
+			this.document.write('<td align="left"><font face="Times" size="3">'+Description+'</font></td>');
+		}
+	}
+}
+
+function fileoutkmd(FileIn){
+	msxml.URL = FileIn;
+	for(b = 0; b < msxml.root.attributes.length; b++){
+		if(msxml.root.attributes.item(b).name == "НОМЕРБЮРО") this.document.write('<td align="center"><font face="Times" size="3">'+msxml.root.attributes.item(b).value+'</font></td>');
+	}
+	//this.document.write('<td align="center"><font face="Times" size="3"></font></td>');
+	for(c = 0; c < msxml.root.children.length; c++){
+		if(msxml.root.children.item(c).tagName == "ДОКУМЕНТ"){
+			for(d = 0; d < msxml.root.children.item(c).attributes.length; d++){
+				if(msxml.root.children.item(c).attributes.item(d).name == "ДАТАНАЧ") this.document.write('<td align="left"><font face="Times" size="3">'+msxml.root.children.item(c).attributes.item(d).value+'</font></td>');
+				if(msxml.root.children.item(c).attributes.item(d).name == "ДАТАКОН") this.document.write('<td align="left"><font face="Times" size="3">'+msxml.root.children.item(c).attributes.item(d).value+'</font></td>');
+			}
+		}
+	}
+}
+
+function modelslist(TagModels){
+	Model = ""+TagModels.children.item("Name").text+"";
+	var OderNumb = Model.replace(/\s+/g,"");
+	var PathModel = ""+PathModels+"/"+Model+"";
+	var FileModel = PathModel+"/"+"TeklaStructuresModel.xml";
+	var PathReports = ""+PathModel+"/"+XS_REPORTS+"";
+	var KMD = PathReports+"/KMD.xml";
+	var UserKMD = PathReports+"/"+UserName+"/KMD.xml";
+	var PerfKMD = PathReports+"/"+XS_PERF+"/KMD.xml";
+	
+	var DMC = PathReports+"/DMC.xml";
+	var KDD = PathReports+"/KDD.xml";
+	
+	GetStatusModel(PathModel);
+	if (StatusModel == "users") this.document.write('<td align="center"><a href="#" onclick="remusr(\''+PortModel+'\')" title="Перезагрузка многопользовательского сервера">'+PortModel+'</a></td>');
+	if (StatusModel == "users2") this.document.write('<td align="center" bgcolor="ff99b8"><img height="35" border="0" src="'+PathIMGMain+'/model-users.png" alt="Модель запущена на уже используемом порте: '+PortModel+'"/></td>');
+	if (StatusModel == "lock") this.document.write('<td align="center"><a href="#" onclick="unlock(\''+PathModel+'\')" ><img height="35" src="'+PathIMGMain+'/model-lock.png" border="0" alt="Один пользователь. Заблокирована\nДля разблокирования - нажмите на иконку замка"/></a></td>'); 
+	if (StatusModel == "user") this.document.write('<td align="center"><img height="35" src="'+PathIMGMain+'/model-user.png" alt="Один пользователь. Разблокирована" border="0"/></td>');
+	if (StatusModel == "tmp") this.document.write('<td align="center"><img height="35" src="'+PathIMGMain+'/model-tmp.png" alt="Модель на временном порте: '+PortModel+'" border="0"/></td>');
+
+	if (OderNumb.indexOf("_") != -1) OderNumb = OderNumb.substr(0, OderNumb.indexOf("_"));
+	if (OderNumb.indexOf("-") != -1) OderNumb = OderNumb.substr(0, OderNumb.indexOf("-"));	
+	if (OderNumb.length == 4) OderNumb = "00"+OderNumb;
+	
+	Description = TagModels.children.item("Description").text;	
+	if (Description == "" && Model.indexOf("_") != -1) Description = Model.substr(Model.indexOf("_"), Model.length);
+	if (Description == "" && Model.indexOf("-") != -1) Description = Model.substr(Model.indexOf("-"), Model.length);
+	Description = Description.replace(/_/g," ");
+	
+	if (fso.FileExists(PathModel+"/"+"PublicWeb/index.html")){ this.document.write('<td align="center"><a href="'+PathModel+"/"+'PublicWeb/index.html" title="Открыть в Internet Explorere 3D модель: '+OderNumb+'"><b><font face="Times" size="3" color="green" >'+OderNumb+'</font></b></a></td>');
+	} else { this.document.write('<td align="center"><a href="'+PathModel+"/"+'" title="Открыть папку модели: '+OderNumb+'"><b><font face="Times" size="3">'+OderNumb+'</font></b></a></td>');}
+	
+	this.document.write('<td></td>');
+
+	if (fso.FileExists(KMD)){fileoutkmd(KMD);
+	} else if (fso.FileExists(PerfKMD)) {fileoutkmd(PerfKMD);
+	} else {
+		this.document.write('<td></td>'); // Даты
+		this.document.write('<td></td>');
+		this.document.write('<td></td>');
+	}
+	
+	if (fso.FileExists(FileModel)){fileoutmodel(FileModel);		
+	} else {
+		this.document.write('<td>...</td>');
+		this.document.write('<td>...</td>');
+	}
+	
+	var CheckStructure = GetCheckStructure(PathModel);
+
+	if (CheckStructure.length == 0){this.document.write('<td align="center"><a href="'+PathModel+'"><img height="30" border="0" src="'+PathIMGMain+'/structure-yes.png" alt="Данные модели заказа: '+Model+' - структурированы.\nМодель готова к автоматизированной обработке в оболочке\nОткрыть папку модели?" /></a></td>');
+	} else {this.document.write('<td align="center"><a href="#" onclick="crstruct(\''+PathModel+'\',\''+Model+'\')"><img height="30" border="0" src="'+PathIMGMain+'/structure-no.png" alt="Нет структуры данных модели заказа: '+Model+'.\nСоздать структуру?"/></a></td>');}
+
+	if (fso.FileExists(PerfKMD)){this.document.write('<td align="center"><a href="#" onclick="expopro(\''+PerfKMD+'\')"><img height="30" border="0" src="'+PathIMGMain+'/openproject-yes.png" alt="Отправить данные в OpenProject?" /></a></td>');
+	} else {this.document.write('<td align="center"><img height="30" border="0" src="'+PathIMGMain+'/process-no.png" alt="Ошибка!!! Нет данных модели по заказу: '+Model+' для экспорта в OpenProject"/></td>');}
+
+	//if (fso.FileExists(KMD)){this.document.write('<td align="center"><font face="Times" size="3"><a href="'+KMD+'"><img height="25" src="'+PathIMGMain+'/filefind-yes.png" alt="Пакет документов раздела КМД" border="0" /></a></font></td>');
+	//} else {this.document.write('<td align="center"><font face="Times" size="3"><img height="25" src="'+PathIMGMain+'/filefind-no.png" alt="Нет - КМД!" /></font></td>');}
+	
+	if (fso.FileExists(UserKMD)){this.document.write('<td align="center"><font face="Times" size="3"><a href="'+UserKMD+'"><img height="25" src="'+PathIMGMain+'/filefind-ok.png" alt="Пакет документов раздела КМД" border="0" /></a></font></td>');
+	} else {this.document.write('<td align="center"><font face="Times" size="3"><img height="25" src="'+PathIMGMain+'/filefind-no.png" alt="Нет - КМД!" /></font></td>');}
+	
+	if (fso.FileExists(DMC)){this.document.write('<td align="center"><font face="Times" size="3"><a href="'+DMC+'"><img height="25" src="'+PathIMGMain+'/filefind-yes.png" alt="Пакет документов раздела ДМС" border="0" /></a></font></td>');
+	} else {this.document.write('<td align="center"><font face="Times" size="3"><img height="25" src="'+PathIMGMain+'/filefind-no.png" alt="Нет - ДМС!" /></font></td>');}
+	
+	if (fso.FileExists(KDD)){this.document.write('<td align="center"><font face="Times" size="3"><a href="'+KDD+'"><img height="25" src="'+PathIMGMain+'/filefind-yes.png" alt="Пакет документов раздела КДД" border="0" /></a></font></td>');
+	} else {this.document.write('<td align="center"><font face="Times" size="3"><img height="25" src="'+PathIMGMain+'/filefind-no.png" alt="Нет - КДД!" /></font></td>');}
+
+	if (CheckStructure.length == 0){this.document.write('<td align="center"><a href="#" onclick="impsided(\''+Model+'\')"><img height="30" border="0" src="'+PathIMGMain+'/inpmod-yes.png" alt="Загрузить КД подрядчика по заказу: '+Model+'" /></a></td>');
+	} else {this.document.write('<td align="center"><img height="30" border="0" src="'+PathIMGMain+'/process-no.png" alt="Ошибка!!! Нарушена структура данных модели заказа: '+Model+'"/></td>');}
+	
+	if (CheckStructure.length == 0 && fso.FileExists(UserKMD)){
+		this.document.write('<td align="center"><a href="#" onclick="Export(\''+UserKMD+'\')"><img height="30" border="0" src="'+PathIMGMain+'/expsrv-yes.png" alt="Отправить данные модели по заказу: '+Model+'" /></a></td>');
+		//this.document.write('<td align="center"><a href="#" onclick="chexp(\''+UserKMD+'\')" target="_blank"><img height="30" border="0" src="'+PathIMGMain+'/expsrv-yes.png" alt="Отправить данные модели по заказу: '+Model+'" /></a></td>');
+	} else {
+		this.document.write('<td align="center"><img height="30" border="0" src="'+PathIMGMain+'/process-no.png" alt="Ошибка!!! Нарушена структура данных модели заказа: '+Model+'"/></td>');
+		//this.document.write('<td align="center"><img height="30" border="0" src="'+PathIMGMain+'/process-no.png" alt="Ошибка!!! Нарушена структура данных модели заказа: '+Model+'"/></td>');
+	}
+	this.document.write('</tr>');
+	this.document.write('</tbody>');
+	
+	return;
+}
+	this.document.write('</table>');
+	
+function crstruct(PathModel, Model){
+    GoCreateStructure(PathModel);
+	alert("Структура каталогов модели: ["+Model+"] создана успешно.");
+	location.reload();
+}
+	
+function impsided(Model){
+	alert("Функционал в разработке...");
+}
+
+function expopro(PerfKMD){
+	alert("Функционал в разработке...");
+}
+
+function Export(PathReport){
+	Report = GetFileIn(PathReport);
+	PathReports = Report.FileParentFolder;
+	ObjReport = GetObjects(PathReport);
+	
+	Project = ObjReport.ObjReport.info.Заказ;
+	Resource = ObjReport.ObjReport.info.Ресурс;
+	
+	PathProject = CreateStructure(PathReports, Model);
+	PathExport = GetPath(Resource)+"/"+PathExport+"/"+Project;
+	Repository = ObjReport.ObjStructure.info.Приоритет;
+	
+	ActID = ObjReport.ObjReport.info.ActID;
+	UserName = ObjReport.ObjReport.info.UserID;
+	UserID = UserName+ModID+ActID;
+	
+	ExportData(ObjReport.ObjStructure, ObjReport.ObjReports, ObjReport.ObjFill);
+}
+
+function chexp(UserKMD){
+	document.location.href = PathMain + "/Check&Export.html?path="+UserKMD;
+}
+	
+	
+function totable(){
+	this.document.write('</br>Свободные порты сервера для рабочих моделей на <font face="Times" color="red" size="4">'+DayHour+'</font>: <font face="Times" color="blue" size="4">'+DiapPort+'</font>');
+	
+	this.document.write('<p><font face="Times" color="red" size="4">!!! 1250, 1260 И ДРУГИЕ ПОРТЫ - ИСПОЛЬЗОВАТЬ ЗАПРЕЩЕНО !!!</font></p>');
+	this.document.write('<a href="#" title="Перезагрузка многопользовательского сервера">1111</a> - Многопользовательская модель<font face="Times" size="4"><img height="35" src="'+PathIMGMain+'/model-user.png" border="0" alt="Один пользователь. Разблокирована"/> - Однопользовательская модель <img height="35" src="'+PathIMGMain+'/model-lock.png" border="0" alt="Один пользователь. Заблокирована\nДля разблокирования - нажмите на иконку замка"/> - Однопользовательская заблокированая модель </font>');
+	this.document.write('</br><img height="35" src="'+PathIMGMain+'/model-users.png" border="0" alt="Многопользовательская модель"/> - Многопользовательская модель, запущенная на уже используемом порте <sup>1</sup> <img height="35" src="'+PathIMGMain+'/model-tmp.png" border="0" alt="Многопользовательская модель, на порте временных моделеей"/> - Многопользовательская модель, запущенная на порте временных моделей: <a href="#" onclick="remusr(\'1244\')" title="Перезагрузка многопользовательского сервера">1244</a>');
+	this.document.write('</br></br>');
+}
+	this.document.write('</br>1 - в случае, если Ваша модель заняла уже используемый порт сервера необходимо перевести ее на имеющийся свободный порт (такие модели помечены красным цветом)');
+	this.document.write('</br>2 - вместо иконки многопользовательских моделей указан порта сервера. По его гиперссылке - произойдет перезагрузка сервера, использующего этот порт');
+	this.document.write('</br>3 - получить, принять входные данные сторонних разработчиков (подрядчиков) и привести их к общей структуре с записью в буферные папки моделей');	
+	this.document.write('</br>4 - отправить структуру буферных папок модели с данными и всеми необходимыми файлами для производства на ресурс общего доступа');
+	this.document.write('</br>* - черным цветов в шапке таблицы указаны соотвествия столбцов таблицы пунктам меню "Файл/Свойства проекта" в программе TeklaStructures</br>');
+</script>
+
+</body>
+<html>
